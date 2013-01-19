@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -18,14 +19,12 @@ import com.zebia.adapter.ItemArrayAdapter;
 import com.zebia.loaders.RESTLoader;
 import com.zebia.model.Item;
 import com.zebia.model.ZebiaResponse;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItemListFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener,
-        ActionBar.OnNavigationListener, LoaderManager.LoaderCallbacks<RESTLoader.RESTResponse> {
+        ActionBar.OnNavigationListener, LoaderManager.LoaderCallbacks<RESTLoader.RESTResponse>,SearchView.OnQueryTextListener {
 
     public static final String BUNDLE_MODE = "BUNDLE.MODE";
     public static final String LOG_TAG = "Zebia";
@@ -34,6 +33,8 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
     private static final String ARGS_PARAMS = "com.zebia.fragments.ItemListFragment.ARGS_PARAMS";
     private ItemArrayAdapter itemsAdapter;
     private Gson gson = new GsonBuilder().create();
+    private SearchView searchView;
+    private String searchQuery = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,8 +59,6 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
         listView.setAdapter(itemsAdapter);
 //        listView.setLayoutAnimation(Animations.listAnimation());
 
-
-
 //        StorageItemsHelper storageItemsHelper = new StorageItemsHelper(getActivity());
 //        ItemsDao.init(storageItemsHelper);
 //        GroupsDao.init(storageItemsHelper);
@@ -78,17 +77,17 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
 //            mode = Mode.fromCode(savedInstanceState.getInt(BUNDLE_MODE));
 //        }
 
-        // Get Views
+
+        registerViews();
+
+        // Initialize the Loader.
+        //getLoaderManager().initLoader(LOADER_ITEMS_SEARCH, getBundle(), this);
+    }
+
+    private void registerViews() {
 //        editTextNewItem = (EditText) getView().findViewById(R.id.et_new_item);
 //        editBar = (ViewGroup) getView().findViewById(R.id.edit_tab);
 
-        registerListeners();
-
-        // Initialize the Loader.
-        getLoaderManager().initLoader(LOADER_ITEMS_SEARCH, getBundle(), this);
-    }
-
-    private void registerListeners() {
 //        getView().findViewById(R.id.bt_item_add).setOnClickListener(this);
         ((ListView) getView().findViewById(R.id.item_list)).setOnItemClickListener(this);
     }
@@ -96,7 +95,11 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
     private Bundle getBundle() {
         Uri uri = Uri.parse("http://192.168.0.18:3000/zebia/items-page-1.json");
         Bundle params = new Bundle();
-        params.putString("q", "cat");
+
+        if (searchQuery != null && searchQuery.length() > 0) {
+            Toast.makeText(getActivity(), "Searching for: " + searchQuery, Toast.LENGTH_SHORT).show();
+            params.putString("q", searchQuery);
+        }
 
         Bundle args = new Bundle();
         args.putParcelable(ARGS_URI, uri);
@@ -115,6 +118,10 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.action_bar_settings_action_provider, menu);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setOnQueryTextListener(this);
+
+        this.searchView = searchView;
     }
 
     @Override
@@ -125,7 +132,9 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
         super.onPrepareOptionsMenu(menu);    //To change body of overridden methods use File | Settings | File Templates.
     }
 
-    // SAVE & RESTORE --------------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------
+    // -- SAVE & RESTORE ---------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------
 
     @Override
     public void onResume() {
@@ -152,7 +161,9 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
 //        outState.putInt(BUNDLE_MODE, mode.getCode());
     }
 
-    // ACTION BAR ------------------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------
+    // -- ACTION BAR -------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -176,11 +187,7 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
 
     private void synchronization() {
         getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH, getBundle(), this);
-//        itemsAdapter.add(new Item().setId("1").setFromUser("Foo Tom").setText("My first item"));
-//        itemsAdapter.add(new Item().setId("2").setFromUser("Mom Pol").setText("My second item"));
     }
-
-    // EDIT BAR --------------------------------------------------------------------------------------------------------
 
 
     // Listeners -------------------------------------------------------------------------------------------------------
@@ -207,16 +214,17 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
         return true;
     }
 
-    // Loaders ---------------------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------
+    // -- Loaders ----------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------
     @Override
     public Loader<RESTLoader.RESTResponse> onCreateLoader(int id, Bundle args) {
         Log.d(LOG_TAG, "Begin onCreateLoader()");
 
         if (args != null && args.containsKey(ARGS_URI) /* && args.containsKey(ARGS_PARAMS) */) {
             Uri    action = args.getParcelable(ARGS_URI);
-            //Bundle params = args.getParcelable(ARGS_PARAMS);
-
-            return new RESTLoader(getActivity(), RESTLoader.HTTPVerb.GET, action, new Bundle());
+            Bundle params = args.getParcelable(ARGS_PARAMS);
+            return new RESTLoader(getActivity(), RESTLoader.HTTPVerb.GET, action, params);
         }
 
         return null;
@@ -262,5 +270,29 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onLoaderReset(Loader<RESTLoader.RESTResponse> loader) {
         Log.d(LOG_TAG, "Begin onLoaderReset()");
+    }
+
+
+    // ---------------------------------------------------------------------------------------------------
+    // -- Search -----------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        searchView.setQuery("", false);
+        searchView.setIconified(true);
+
+        this.searchQuery = query;
+
+        getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH, getBundle(), this);
+
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
+    }
+
+    private void hideKeyboard() {
     }
 }

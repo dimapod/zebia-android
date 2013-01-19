@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">zebia-android</string>
     <string name="menu_synchronisation">Sync</string>
+    <string name="action_bar_search">Search</string>
 </resources>

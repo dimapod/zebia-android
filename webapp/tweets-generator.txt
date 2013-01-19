@@ -1,0 +1,50 @@
+http://json-generator.appspot.com/
+----------------------------------
+
+Original:
+[
+    '{{repeat(5)}}',
+    {
+        id: '{{index}}',
+        guid: '{{guid}}',
+        picture: 'http://placehold.it/32x32',
+        age: '{{numeric(20,40)}}',
+        name: '{{firstName}} {{lastName}}',
+        gender: function(idx) {
+            return this.bool() ? 'male' : 'female';
+        },
+        company: '{{company}}',
+        phone: '{{phone}}',
+        email: '{{email}}',
+        address: '{{numeric(10000,40000)}}, {{city}}, {{street}}',
+        about: '{{lorem(50,100)}}',
+        registered: '{{date(YYYY-MM-ddThh:mm:ss Z)}}',
+        tags: [
+            '{{repeat(7)}}',
+            '{{lorem(1)}}'
+        ],
+        friends: [
+            '{{repeat(3)}}',
+            {
+                id: '{{index}}',
+                name: '{{firstName}} {{lastName}}'
+            }
+        ]
+    }
+]
+
+Tweets:
+[
+    '{{repeat(15)}}',
+    {
+        id: function(idx) {
+            return idx + 15;
+        },
+        from_user_name: '{{firstName}} {{lastName}}',
+        from_user: '{{firstName}}_{{lastName}}',
+        from_user_id: '{{guid}}',
+        text: '{{lorem(5, 20)}}',
+        text_long: '{{lorem(50, 100)}}',
+        created_at: '{{date(YYYY-MM-dd hh:mm:ss Z)}}'
+    }
+]

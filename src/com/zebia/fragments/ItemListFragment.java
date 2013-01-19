@@ -6,23 +6,30 @@ import android.app.LoaderManager;
 import android.content.Loader;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.zebia.R;
-import com.zebia.adapter.TweetArrayAdapter;
+import com.zebia.adapter.ItemArrayAdapter;
 import com.zebia.loaders.RESTLoader;
+import com.zebia.model.Item;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemListFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener,
         ActionBar.OnNavigationListener, LoaderManager.LoaderCallbacks<RESTLoader.RESTResponse> {
 
     public static final String BUNDLE_MODE = "BUNDLE.MODE";
     public static final String LOG_TAG = "Zebia";
-    private static final int LOADER_TWITTER_SEARCH = 0x1;
-    private static final String ARGS_URI = "fr.dpo.whattobuy.fragment.ARGS_URI";
-    private TweetArrayAdapter itemsAdapter;
+    private static final int LOADER_ITEMS_SEARCH = 0x1;
+    private static final String ARGS_URI = "com.zebia.fragments.ItemListFragment.ARGS_URI";
+    private static final String ARGS_PARAMS = "com.zebia.fragments.ItemListFragment.ARGS_PARAMS";
+    private ItemArrayAdapter itemsAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,16 +40,21 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        Log.d(LOG_TAG, "Begin onActivityCreated()");
+
         getActivity().getActionBar().setDisplayShowTitleEnabled(false);
 //        getActivity().getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 //        ArrayAdapter<String> a = new ArrayAdapter<String>(getActivity(),
 //                android.R.layout.simple_list_item_1, new String[]{"Group1", "Group2"});
 //        getActivity().getActionBar().setListNavigationCallbacks(a, this);
 
-        itemsAdapter = new TweetArrayAdapter(getActivity(), R.layout.item_list);
+        itemsAdapter = new ItemArrayAdapter(getActivity(), R.layout.item_list);
         ListView listView = (ListView) getView().findViewById(R.id.item_list);
         listView.setAdapter(itemsAdapter);
-        listView.setLayoutAnimation(Animations.listAnimation());
+//        listView.setLayoutAnimation(Animations.listAnimation());
+
+
 
 //        StorageItemsHelper storageItemsHelper = new StorageItemsHelper(getActivity());
 //        ItemsDao.init(storageItemsHelper);
@@ -69,23 +81,23 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
         registerListeners();
 
         // Initialize the Loader.
-//        getLoaderManager().initLoader(LOADER_TWITTER_SEARCH, getBundle(), this);
-    }
-
-    private Bundle getBundle() {
-        Uri uri = Uri.parse("http://192.168.0.19:9898/resource/whattobuy");
-        // Bundle params = new Bundle();
-        // params.putString("q", "cat");
-
-        Bundle args = new Bundle();
-        args.putParcelable(ARGS_URI, uri);
-        // args.putParcelable(ARGS_PARAMS, params);
-        return args;
+        getLoaderManager().initLoader(LOADER_ITEMS_SEARCH, getBundle(), this);
     }
 
     private void registerListeners() {
 //        getView().findViewById(R.id.bt_item_add).setOnClickListener(this);
         ((ListView) getView().findViewById(R.id.item_list)).setOnItemClickListener(this);
+    }
+
+    private Bundle getBundle() {
+        Uri uri = Uri.parse("http://192.168.0.18:3000/zebia/items-page-1.json");
+        Bundle params = new Bundle();
+        params.putString("q", "cat");
+
+        Bundle args = new Bundle();
+        args.putParcelable(ARGS_URI, uri);
+        args.putParcelable(ARGS_PARAMS, params);
+        return args;
     }
 
     @Override
@@ -113,6 +125,8 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onResume() {
+        Log.d(LOG_TAG, "Begin onResume()");
+
         super.onResume();
         itemsAdapter.clear();
 //        itemsAdapter.addAll(ItemsDao.getInstance().read());
@@ -120,6 +134,8 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onPause() {
+        Log.d(LOG_TAG, "Begin onPause()");
+
         super.onPause();
 //        // TODO: save all
 //        ItemsDao.getInstance().delete();
@@ -136,6 +152,8 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(LOG_TAG, "Begin onOptionsItemSelected()");
+
         Toast.makeText(getActivity(), "Selected Item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
 
         switch (item.getItemId()) {
@@ -153,7 +171,9 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void synchronization() {
-
+        getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH, getBundle(), this);
+//        itemsAdapter.add(new Item().setId("1").setFromUser("Foo Tom").setText("My first item"));
+//        itemsAdapter.add(new Item().setId("2").setFromUser("Mom Pol").setText("My second item"));
     }
 
     // EDIT BAR --------------------------------------------------------------------------------------------------------
@@ -171,6 +191,7 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.d(LOG_TAG, "Begin onItemClick()");
 //        Item item = itemsAdapter.getData().get(position);
 //        item.setDone(!item.isDone());
 //        itemsAdapter.notifyDataSetChanged();
@@ -185,6 +206,8 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
     // Loaders ---------------------------------------------------------------------------------------------------------
     @Override
     public Loader<RESTLoader.RESTResponse> onCreateLoader(int id, Bundle args) {
+        Log.d(LOG_TAG, "Begin onCreateLoader()");
+
         if (args != null && args.containsKey(ARGS_URI) /* && args.containsKey(ARGS_PARAMS) */) {
             Uri    action = args.getParcelable(ARGS_URI);
             //Bundle params = args.getParcelable(ARGS_PARAMS);
@@ -198,10 +221,51 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onLoadFinished(Loader<RESTLoader.RESTResponse> loader, RESTLoader.RESTResponse data) {
 
+        Log.d(LOG_TAG, "Begin onLoadFinished()");
+
+        int    code = data.getCode();
+        String json = data.getData();
+
+        // Check to see if we got an HTTP 200 code and have some data.
+        if (code == 200 && !json.equals("")) {
+
+            List<Item> tweets = parse(json);
+
+            itemsAdapter.clear();
+
+            for (Item item : tweets) {
+                itemsAdapter.add(item);
+            }
+        }
+        else {
+            Toast.makeText(getActivity(), "Failed to load Twitter data. Check your internet settings.",
+                    Toast.LENGTH_SHORT).show();
+        }
+
     }
+
+    private List<Item> parse(String json) {
+        ArrayList<Item> items = new ArrayList<Item>();
+
+        try {
+            //JSONArray  jsonItems = new JSONArray(json);
+            JSONObject jsonParsed = new JSONObject(json);
+            JSONArray jsonItems = jsonParsed.getJSONArray("results");
+            for (int i = 0; i < jsonItems.length(); i++) {
+                JSONObject item = jsonItems.getJSONObject(i);
+                items.add(new Item().setId(item.getString("id")).setFromUser(item.getString("from_user")).setText(item.getString("text")));
+            }
+        }
+        catch (Exception e) {
+            Log.e(LOG_TAG, "Failed to parse JSON.", e);
+        }
+
+        return items;
+    }
+
 
     @Override
     public void onLoaderReset(Loader<RESTLoader.RESTResponse> loader) {
-
+        Log.d(LOG_TAG, "Begin onLoaderReset()");
     }
 }

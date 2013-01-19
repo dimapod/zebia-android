@@ -1,16 +1,30 @@
 package com.zebia.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 public class Item {
+
 	private String id;
+
+    @SerializedName("from_user_name")
     private String fromUserName;
+
+    @SerializedName("from_user")
     private String fromUser;
+
+    @SerializedName("from_user_id")
     private String fromUserId;
 	private String text;
+
+    @SerializedName("text_long")
 	private String textLong;
-	private boolean sync = false;
+
+    //@SerializedName("created_at")
 	private Date createdAt;
+
+	private boolean sync = false;
 
     public Item() {
     }

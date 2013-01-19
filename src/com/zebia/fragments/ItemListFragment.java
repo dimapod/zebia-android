@@ -11,10 +11,13 @@ import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.zebia.R;
 import com.zebia.adapter.ItemArrayAdapter;
 import com.zebia.loaders.RESTLoader;
 import com.zebia.model.Item;
+import com.zebia.model.ZebiaResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -30,6 +33,7 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
     private static final String ARGS_URI = "com.zebia.fragments.ItemListFragment.ARGS_URI";
     private static final String ARGS_PARAMS = "com.zebia.fragments.ItemListFragment.ARGS_PARAMS";
     private ItemArrayAdapter itemsAdapter;
+    private Gson gson = new GsonBuilder().create();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -241,26 +245,17 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
             Toast.makeText(getActivity(), "Failed to load Twitter data. Check your internet settings.",
                     Toast.LENGTH_SHORT).show();
         }
-
     }
 
     private List<Item> parse(String json) {
-        ArrayList<Item> items = new ArrayList<Item>();
-
         try {
-            //JSONArray  jsonItems = new JSONArray(json);
-            JSONObject jsonParsed = new JSONObject(json);
-            JSONArray jsonItems = jsonParsed.getJSONArray("results");
-            for (int i = 0; i < jsonItems.length(); i++) {
-                JSONObject item = jsonItems.getJSONObject(i);
-                items.add(new Item().setId(item.getString("id")).setFromUser(item.getString("from_user")).setText(item.getString("text")));
-            }
-        }
-        catch (Exception e) {
+            ZebiaResponse zebiaResponse = gson.fromJson(json, ZebiaResponse.class);
+            return zebiaResponse.getResults();
+        } catch (Exception e) {
             Log.e(LOG_TAG, "Failed to parse JSON.", e);
+            e.printStackTrace();
         }
-
-        return items;
+        return new ArrayList<Item>();
     }
 
 

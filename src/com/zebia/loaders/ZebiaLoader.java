@@ -1,11 +1,13 @@
 package com.zebia.loaders;
 
-import android.app.Activity;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import com.google.gson.Gson;
+import com.zebia.dao.ItemsDao;
+import com.zebia.model.ZebiaResponse;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -24,12 +26,16 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RESTLoader extends AsyncTaskLoader<RESTLoader.RESTResponse> {
-    private static final String TAG = RESTLoader.class.getName();
+public class ZebiaLoader extends AsyncTaskLoader<ZebiaLoader.RestResponse> {
+    private static final String TAG = ZebiaLoader.class.getName();
 
-    // We use this delta to determine if our cached data is 
+    // We use this delta to determine if our cached data is
     // old or not. The value we have here is 10 minutes;
     private static final long STALE_DELTA = 600000;
+    private static final String LOG_TAG = "Zebia";
+
+    private Gson gson = new Gson();
+    private boolean mReload = true;
 
     public enum HTTPVerb {
         GET,
@@ -38,61 +44,63 @@ public class RESTLoader extends AsyncTaskLoader<RESTLoader.RESTResponse> {
         DELETE
     }
 
-    public static class RESTResponse {
-        private String mData;
-        private int mCode;
+    public static class RestResponse {
+        private ZebiaResponse zebiaResponse;
+        private int code;
 
-        public RESTResponse() {
+        public RestResponse() {
         }
 
-        public RESTResponse(String data, int code) {
-            mData = data;
-            mCode = code;
-        }
-
-        public String getData() {
-            return mData;
+        public RestResponse(ZebiaResponse zebiaResponse, int code) {
+            this.zebiaResponse = zebiaResponse;
+            this.code = code;
         }
 
         public int getCode() {
-            return mCode;
+            return code;
+        }
+
+        public ZebiaResponse getZebiaResponse() {
+            return zebiaResponse;
         }
     }
 
     private HTTPVerb mVerb;
     private Uri mAction;
     private Bundle mParams;
-    private RESTResponse mRestResponse;
+    private RestResponse mRestResponse;
 
     private long mLastLoad;
 
-    public RESTLoader(Context context) {
-        super(context);
-    }
+//    public ZebiaLoader(Context context) {
+//        super(context);
+//    }
+//
+//    public ZebiaLoader(Context context, HTTPVerb verb, Uri action) {
+//        super(context);
+//
+//        mVerb = verb;
+//        mAction = action;
+//    }
 
-    public RESTLoader(Context context, HTTPVerb verb, Uri action) {
-        super(context);
-
-        mVerb = verb;
-        mAction = action;
-    }
-
-    public RESTLoader(Context context, HTTPVerb verb, Uri action, Bundle params) {
+    public ZebiaLoader(Context context, HTTPVerb verb, Uri action, Bundle params, boolean reload) {
         super(context);
 
         mVerb = verb;
         mAction = action;
         mParams = params;
+        mReload = reload;
     }
 
     @Override
-    public RESTResponse loadInBackground() {
+    public RestResponse loadInBackground() {
         try {
+
             // At the very least we always need an action.
             if (mAction == null) {
                 Log.e(TAG, "You did not define an action. REST call canceled.");
-                return new RESTResponse(); // We send an empty response back. The LoaderCallbacks<RESTResponse>
-                // implementation will always need to check the RESTResponse
+                return new RestResponse(); // We send an empty response back. The LoaderCallbacks<RestResponse>
+                // implementation will always need to check the RestResponse
                 // and handle error cases like this.
             }
 
@@ -104,6 +112,17 @@ public class RESTLoader extends AsyncTaskLoader<RESTLoader.RESTResponse> {
             // given.
             switch (mVerb) {
                 case GET: {
+
+                    if (mReload == false) {
+                        Log.d(LOG_TAG, "Trying to load data from db cache");
+                        // Try to fetch data from cache
+                        ZebiaResponse zebiaResponse = ItemsDao.getInstance().restore();
+                        if (zebiaResponse != null) {
+                            return new RestResponse(zebiaResponse, 200);
+                        }
+                        Log.d(LOG_TAG, "Cache is empty... fetching from net");
+                    }
+
                     request = new HttpGet();
                     attachUriWithQuery(request, mAction, mParams);
                 }
@@ -163,30 +182,41 @@ public class RESTLoader extends AsyncTaskLoader<RESTLoader.RESTResponse> {
                 StatusLine responseStatus = response.getStatusLine();
                 int statusCode = responseStatus != null ? responseStatus.getStatusCode() : 0;
 
-                // Here we create our response and send it back to the LoaderCallbacks<RESTResponse> implementation.
-                RESTResponse restResponse = new RESTResponse(responseEntity != null ? EntityUtils.toString(responseEntity) : null, statusCode);
+                // Here we create our response and send it back to the LoaderCallbacks<RestResponse> implementation.
+                String responseJson = responseEntity != null ? EntityUtils.toString(responseEntity) : null;
+
+                ZebiaResponse zebiaResponse = null;
+                if (responseJson != null) {
+                    zebiaResponse = parse(responseJson);
+                    if (zebiaResponse == null) {
+                        statusCode = -1;
+                    }
+                    Log.d(LOG_TAG, "Saving data to cache...");
+                    ItemsDao.getInstance().save(zebiaResponse);
+                }
+                RestResponse restResponse = new RestResponse(zebiaResponse, statusCode);
                 return restResponse;
             }
 
-            // Request was null if we get here, so let's just send our empty RESTResponse like usual.
-            return new RESTResponse();
+            // Request was null if we get here, so let's just send our empty RestResponse like usual.
+            return new RestResponse();
         } catch (URISyntaxException e) {
             Log.e(TAG, "URI syntax was incorrect. " + verbToString(mVerb) + ": " + mAction.toString(), e);
-            return new RESTResponse();
+            return new RestResponse();
         } catch (UnsupportedEncodingException e) {
             Log.e(TAG, "A UrlEncodedFormEntity was created with an unsupported encoding.", e);
-            return new RESTResponse();
+            return new RestResponse();
         } catch (ClientProtocolException e) {
             Log.e(TAG, "There was a problem when sending the request.", e);
-            return new RESTResponse();
+            return new RestResponse();
         } catch (IOException e) {
             Log.e(TAG, "There was a problem when sending the request.", e);
-            return new RESTResponse();
+            return new RestResponse();
         }
     }
 
     @Override
-    public void deliverResult(RESTResponse data) {
+    public void deliverResult(RestResponse data) {
         // Here we cache our response.
         mRestResponse = data;
         super.deliverResult(data);
@@ -280,5 +310,15 @@ public class RESTLoader extends AsyncTaskLoader<RESTLoader.RESTResponse> {
         }
 
         return formList;
+    }
+
+    private ZebiaResponse parse(String json) {
+        try {
+            return gson.fromJson(json, ZebiaResponse.class);
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "Failed to parse JSON.", e);
+            e.printStackTrace();
+        }
+        return null;
     }
 }

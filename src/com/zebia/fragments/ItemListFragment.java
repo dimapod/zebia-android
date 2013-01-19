@@ -16,7 +16,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.zebia.R;
 import com.zebia.adapter.ItemArrayAdapter;
-import com.zebia.loaders.RESTLoader;
+import com.zebia.dao.ItemsDao;
+import com.zebia.dao.StorageItemsHelper;
+import com.zebia.loaders.ZebiaLoader;
 import com.zebia.model.Item;
 import com.zebia.model.ZebiaResponse;
 
@@ -24,13 +26,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemListFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener,
-        ActionBar.OnNavigationListener, LoaderManager.LoaderCallbacks<RESTLoader.RESTResponse>,SearchView.OnQueryTextListener {
+        ActionBar.OnNavigationListener,
+        LoaderManager.LoaderCallbacks<ZebiaLoader.RestResponse>,
+        SearchView.OnQueryTextListener {
 
     public static final String BUNDLE_MODE = "BUNDLE.MODE";
     public static final String LOG_TAG = "Zebia";
     private static final int LOADER_ITEMS_SEARCH = 0x1;
     private static final String ARGS_URI = "com.zebia.fragments.ItemListFragment.ARGS_URI";
     private static final String ARGS_PARAMS = "com.zebia.fragments.ItemListFragment.ARGS_PARAMS";
+    private static final String ARGS_RELOAD = "com.zebia.fragments.ItemListFragment.ARGS_RELOAD";
     private ItemArrayAdapter itemsAdapter;
     private Gson gson = new GsonBuilder().create();
     private SearchView searchView;
@@ -59,8 +64,8 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
         listView.setAdapter(itemsAdapter);
 //        listView.setLayoutAnimation(Animations.listAnimation());
 
-//        StorageItemsHelper storageItemsHelper = new StorageItemsHelper(getActivity());
-//        ItemsDao.init(storageItemsHelper);
+        StorageItemsHelper storageItemsHelper = new StorageItemsHelper(getActivity());
+        ItemsDao.init(storageItemsHelper);
 //        GroupsDao.init(storageItemsHelper);
 
         // TODO delete
@@ -77,34 +82,18 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
 //            mode = Mode.fromCode(savedInstanceState.getInt(BUNDLE_MODE));
 //        }
 
-
-        registerViews();
+        registerElements();
 
         // Initialize the Loader.
-        //getLoaderManager().initLoader(LOADER_ITEMS_SEARCH, getBundle(), this);
+        getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH, getBundle(false), this);
     }
 
-    private void registerViews() {
+    private void registerElements() {
 //        editTextNewItem = (EditText) getView().findViewById(R.id.et_new_item);
 //        editBar = (ViewGroup) getView().findViewById(R.id.edit_tab);
 
 //        getView().findViewById(R.id.bt_item_add).setOnClickListener(this);
         ((ListView) getView().findViewById(R.id.item_list)).setOnItemClickListener(this);
-    }
-
-    private Bundle getBundle() {
-        Uri uri = Uri.parse("http://192.168.0.18:3000/zebia/items-page-1.json");
-        Bundle params = new Bundle();
-
-        if (searchQuery != null && searchQuery.length() > 0) {
-            Toast.makeText(getActivity(), "Searching for: " + searchQuery, Toast.LENGTH_SHORT).show();
-            params.putString("q", searchQuery);
-        }
-
-        Bundle args = new Bundle();
-        args.putParcelable(ARGS_URI, uri);
-        args.putParcelable(ARGS_PARAMS, params);
-        return args;
     }
 
     @Override
@@ -186,7 +175,7 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void synchronization() {
-        getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH, getBundle(), this);
+        getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH, getBundle(false), this);
     }
 
 
@@ -217,40 +206,50 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
     // ---------------------------------------------------------------------------------------------------
     // -- Loaders ----------------------------------------------------------------------------------------
     // ---------------------------------------------------------------------------------------------------
+
+    private Bundle getBundle(boolean reset) {
+        Uri uri = Uri.parse("http://192.168.0.18:3000/zebia/items-page-1.json");
+        Bundle params = new Bundle();
+
+        if (searchQuery != null && searchQuery.length() > 0) {
+            Toast.makeText(getActivity(), "Searching for: " + searchQuery, Toast.LENGTH_SHORT).show();
+            params.putString("q", searchQuery);
+        }
+
+        Bundle args = new Bundle();
+        args.putParcelable(ARGS_URI, uri);
+        args.putParcelable(ARGS_PARAMS, params);
+        args.putBoolean(ARGS_RELOAD, reset);
+        return args;
+    }
+
     @Override
-    public Loader<RESTLoader.RESTResponse> onCreateLoader(int id, Bundle args) {
+    public Loader<ZebiaLoader.RestResponse> onCreateLoader(int id, Bundle args) {
         Log.d(LOG_TAG, "Begin onCreateLoader()");
 
         if (args != null && args.containsKey(ARGS_URI) /* && args.containsKey(ARGS_PARAMS) */) {
-            Uri    action = args.getParcelable(ARGS_URI);
+            Uri action = args.getParcelable(ARGS_URI);
             Bundle params = args.getParcelable(ARGS_PARAMS);
-            return new RESTLoader(getActivity(), RESTLoader.HTTPVerb.GET, action, params);
+            Boolean reload = args.getBoolean(ARGS_RELOAD);
+            return new ZebiaLoader(getActivity(), ZebiaLoader.HTTPVerb.GET, action, params, reload);
         }
 
         return null;
     }
 
     @Override
-    public void onLoadFinished(Loader<RESTLoader.RESTResponse> loader, RESTLoader.RESTResponse data) {
+    public void onLoadFinished(Loader<ZebiaLoader.RestResponse> loader, ZebiaLoader.RestResponse data) {
 
         Log.d(LOG_TAG, "Begin onLoadFinished()");
 
-        int    code = data.getCode();
-        String json = data.getData();
+        int code = data.getCode();
 
         // Check to see if we got an HTTP 200 code and have some data.
-        if (code == 200 && !json.equals("")) {
-
-            List<Item> tweets = parse(json);
-
+        if (code == 200) {
             itemsAdapter.clear();
-
-            for (Item item : tweets) {
-                itemsAdapter.add(item);
-            }
-        }
-        else {
-            Toast.makeText(getActivity(), "Failed to load Twitter data. Check your internet settings.",
+            itemsAdapter.addAll(data.getZebiaResponse().getResults());
+        } else {
+            Toast.makeText(getActivity(), "Failed to load data. Check your internet settings.",
                     Toast.LENGTH_SHORT).show();
         }
     }
@@ -266,12 +265,10 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
         return new ArrayList<Item>();
     }
 
-
     @Override
-    public void onLoaderReset(Loader<RESTLoader.RESTResponse> loader) {
+    public void onLoaderReset(Loader<ZebiaLoader.RestResponse> loader) {
         Log.d(LOG_TAG, "Begin onLoaderReset()");
     }
-
 
     // ---------------------------------------------------------------------------------------------------
     // -- Search -----------------------------------------------------------------------------------------
@@ -283,7 +280,7 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
 
         this.searchQuery = query;
 
-        getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH, getBundle(), this);
+        getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH, getBundle(true), this);
 
         return true;
     }
@@ -293,6 +290,4 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
         return false;
     }
 
-    private void hideKeyboard() {
-    }
 }

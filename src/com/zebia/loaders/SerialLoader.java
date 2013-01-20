@@ -107,7 +107,7 @@ public class SerialLoader<T> extends AsyncTaskLoader<SerialLoader.RestResponse> 
                 case GET: {
 
                     if (mReload == false) {
-                        Log.d(LOG_TAG, "Trying to load data from db cache");
+                        Log.d(LOG_TAG, "Trying to load data from db cash");
                         // Try to fetch data from cache
                         T response = serialCashDao.restore();
                         if (response != null) {
@@ -184,7 +184,7 @@ public class SerialLoader<T> extends AsyncTaskLoader<SerialLoader.RestResponse> 
                     if (responseObj == null) {
                         statusCode = -1;
                     }
-                    Log.d(LOG_TAG, "Saving data to cache...");
+                    Log.d(LOG_TAG, "Saving data to cash...");
                     serialCashDao.save(responseObj);
                 }
                 RestResponse restResponse = new RestResponse(responseObj, statusCode);
@@ -210,7 +210,7 @@ public class SerialLoader<T> extends AsyncTaskLoader<SerialLoader.RestResponse> 
 
     @Override
     public void deliverResult(RestResponse data) {
-        // Here we cache our response.
+        // Here we cash our response.
         mRestResponse = data;
         super.deliverResult(data);
     }
@@ -243,7 +243,7 @@ public class SerialLoader<T> extends AsyncTaskLoader<SerialLoader.RestResponse> 
         // Stop the Loader if it is currently running.
         onStopLoading();
 
-        // Get rid of our cache if it exists.
+        // Get rid of our cash if it exists.
         mRestResponse = null;
 
         // Reset our stale timer.

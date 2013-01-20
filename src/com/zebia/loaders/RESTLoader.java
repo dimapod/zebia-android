@@ -187,7 +187,7 @@ public class RESTLoader extends AsyncTaskLoader<RESTLoader.RESTResponse> {
 
     @Override
     public void deliverResult(RESTResponse data) {
-        // Here we cache our response.
+        // Here we cash our response.
         mRestResponse = data;
         super.deliverResult(data);
     }
@@ -220,7 +220,7 @@ public class RESTLoader extends AsyncTaskLoader<RESTLoader.RESTResponse> {
         // Stop the Loader if it is currently running.
         onStopLoading();
 
-        // Get rid of our cache if it exists.
+        // Get rid of our cash if it exists.
         mRestResponse = null;
 
         // Reset our stale timer.

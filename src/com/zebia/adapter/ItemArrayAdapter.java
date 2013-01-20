@@ -18,8 +18,8 @@ import java.util.List;
 
 public class ItemArrayAdapter extends ArrayAdapter<Item> {
     static final int DELTA = 60 * 60000;
-    static final int COLOR_STATUS = Color.parseColor("#a9f300"); //  Integer.parseInt("00ab13", 16);
-    static final int COLOR_OWNER = Color.parseColor("#ffb200"); //Integer.parseInt("ffb200", 16);
+    static final int COLOR_STATUS = Color.parseColor("#a9f300");
+    static final int COLOR_OWNER = Color.parseColor("#ffb200");
 
     Context context;
     int layoutResourceId;
@@ -48,9 +48,8 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new ItemHolder();
-            holder.txtItemTitle = (TextView) row.findViewById(R.id.tx_item);
-//            holder.txtItemStatus = (TextView) row.findViewById(R.id.tx_item_status);
-//            holder.txtItemOwner = (TextView) row.findViewById(R.id.tx_item_owner);
+            holder.txtItemText = (TextView) row.findViewById(R.id.tx_item_text);
+            holder.txtItemFromUserName = (TextView) row.findViewById(R.id.tx_item_from_user);
 
             row.setTag(holder);
         } else {
@@ -64,67 +63,13 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
 
     static class ItemHolder {
 
-        TextView txtItemTitle;
+        TextView txtItemText;
+        TextView txtItemFromUserName;
 
         public void fromItem(Item item) {
-            // TITLE
-            txtItemTitle.setText(item.toString());
-
-//            // DONE
-//            txtItemTitle.getPaint().setStrikeThruText(item.isDone());
-//            txtItemTitle.setTextColor(item.isDone() ? Color.GRAY : item.getGroup().getColor());
-//
-//            // STARRED
-//            txtItemTitle.setTypeface(item.isImportant() ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
-//
-//            // STATUS
-//            if (item.getTimestamp().getTime() > ((new Date().getTime() - DELTA))) {
-//                txtItemStatus.setText("New");
-//                txtItemStatus.setVisibility(View.VISIBLE);
-//                txtItemStatus.setTextColor(item.isDone() ? Color.GRAY : COLOR_STATUS);
-//                txtItemStatus.getPaint().setStrikeThruText(item.isDone());
-//            } else {
-//                txtItemStatus.setVisibility(View.GONE);
-//            }
-//
-//            // OWNER
-//            if (item.getOwner() != 0) {
-//                txtItemOwner.setText("By " + item.getOwner());  // TODO
-//                txtItemOwner.setVisibility(View.VISIBLE);
-//                txtItemOwner.setTextColor(item.isDone() ? Color.GRAY : COLOR_OWNER);
-//                txtItemOwner.getPaint().setStrikeThruText(item.isDone());
-//            } else {
-//                txtItemOwner.setVisibility(View.INVISIBLE);
-//            }
-
+            txtItemText.setText(item.getText());
+            txtItemFromUserName.setText(item.getFromUserName());
         }
     }
 
-//    @Override
-//    public void clear() {
-//        this.data.clear();
-//        super.clear();
-//    }
-//
-//    @Override
-//    public void add(Item item) {
-//        this.data.add(item);
-//        super.add(item);
-//    }
-//
-//    @Override
-//    public void addAll(Item... items) {
-//        super.addAll(items);
-//        this.data.addAll(Arrays.asList(items));
-//    }
-//
-//    @Override
-//    public void addAll(Collection<? extends Item> collection) {
-//        super.addAll(collection);
-//        this.data.addAll(collection);
-//    }
-//
-    public List<Item> getData() {
-        return data;
-    }
 }

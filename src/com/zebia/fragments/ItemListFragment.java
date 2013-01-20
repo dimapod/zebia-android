@@ -35,12 +35,13 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
         SearchView.OnQueryTextListener {
 
     public static final String BUNDLE_MODE = "BUNDLE.MODE";
-    public static final String LOG_TAG = "Zebia";
+    public static final String LOG_TAG = ItemListFragment.class.getName();
     private static final int LOADER_ITEMS_SEARCH = 0x1;
     private static final String ARGS_URI = "com.zebia.fragments.ItemListFragment.ARGS_URI";
     private static final String ARGS_PARAMS = "com.zebia.fragments.ItemListFragment.ARGS_PARAMS";
     private static final String ARGS_RELOAD = "com.zebia.fragments.ItemListFragment.ARGS_RELOAD";
     private static final int REQUEST_CODE_PREFERENCES = 1;
+
     private ItemArrayAdapter itemsAdapter;
     private Gson gson = new GsonBuilder().create();
     private SearchView searchView;
@@ -72,22 +73,13 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
         listView.setLayoutAnimation(Animations.listAnimation());
 
         StorageItemsHelper storageItemsHelper = new StorageItemsHelper(getActivity());
-//        GroupsDao.init(storageItemsHelper);
-
-        // TODO delete
-        //GroupsDao.getInstance().delete();
-
-//        // Init DB
-//        if (GroupsDao.getInstance().read().isEmpty()) {
-//            GroupsDao.getInstance().create(new ItemGroup().setName("Default 1").setColor(Color.parseColor("#07A023")));
-//            GroupsDao.getInstance().create(new ItemGroup().setName("Default 2").setColor(Color.BLUE));
-//        }
 
         // Restore state
-//        if (savedInstanceState != null) {
-//            mode = Mode.fromCode(savedInstanceState.getInt(BUNDLE_MODE));
-//        }
+        //        if (savedInstanceState != null) {
+        //            mode = Mode.fromCode(savedInstanceState.getInt(BUNDLE_MODE));
+        //        }
 
+        // Register all listeners and fetch views
         registerElements();
 
         // Initialize the Loader.
@@ -95,17 +87,14 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void registerElements() {
-//        editTextNewItem = (EditText) getView().findViewById(R.id.et_new_item);
-//        editBar = (ViewGroup) getView().findViewById(R.id.edit_tab);
+        //        editTextNewItem = (EditText) getView().findViewById(R.id.et_new_item);
 
-//        getView().findViewById(R.id.bt_item_add).setOnClickListener(this);
         ((ListView) getView().findViewById(R.id.item_list)).setOnItemClickListener(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.list_fragment, container, false);
     }
 
@@ -121,10 +110,8 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-//        menu.findItem(R.id.menu_clear_list).setVisible(mode == Mode.EDIT);
-//        menu.findItem(R.id.menu_edit).setVisible(mode != Mode.EDIT);
-//        menu.findItem(R.id.menu_back).setVisible(mode == Mode.EDIT);
-        super.onPrepareOptionsMenu(menu);    //To change body of overridden methods use File | Settings | File Templates.
+        //        menu.findItem(R.id.menu_clear_list).setVisible(true);
+        super.onPrepareOptionsMenu(menu);
     }
 
     // ---------------------------------------------------------------------------------------------------
@@ -149,7 +136,7 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-//        outState.putInt(BUNDLE_MODE, mode.getCode());
+        //        outState.putInt(BUNDLE_MODE, mode.getCode());
     }
 
     // ---------------------------------------------------------------------------------------------------
@@ -180,68 +167,37 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
         return true;
     }
 
-    private void clearList() {
-        // TODO Add Confirmation
-        itemsAdapter.clear();
-    }
-
     private void synchronization() {
-        getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH, getBundle(false), this);
+        getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH, getBundle(true), this);
     }
-
 
     // Listeners -------------------------------------------------------------------------------------------------------
     @Override
     public void onClick(View view) {
-//        switch (view.getId()) {
-//            case R.id.bt_item_add:
-//                addNewItem(view);
-//                break;
-//        }
+        //        switch (view.getId()) {
+        //            case R.id.bt_item_add:
+        //                addNewItem(view);
+        //                break;
+        //        }
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.d(LOG_TAG, "Begin onItemClick()");
-//        Item item = itemsAdapter.getData().get(position);
-//        item.setDone(!item.isDone());
-//        itemsAdapter.notifyDataSetChanged();
+        //        Item item = itemsAdapter.getData().get(position);
+        //        item.setDone(!item.isDone());
+        //        itemsAdapter.notifyDataSetChanged();
     }
 
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-//        itemsAdapter.filer(GroupsDao.getInstance().readCached(itemPosition + 1));
+        // Spinner at action bar
         return true;
     }
 
     // ---------------------------------------------------------------------------------------------------
     // -- Loaders ----------------------------------------------------------------------------------------
     // ---------------------------------------------------------------------------------------------------
-
-    private Bundle getBundle(boolean reset) {
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String ip = sharedPreferences.getString("preference_ip", "0.0.0.0");
-        String port = sharedPreferences.getString("preference_port", "3000");
-        String mountpoint = sharedPreferences.getString("preference_mountpoint", "zebia");
-
-        StringBuilder sb = new StringBuilder("http://").append(ip).append(":").append(port).append("/").append(mountpoint).append("/");
-        sb.append("items-page-1.json");
-
-        Uri uri = Uri.parse(sb.toString());
-        Bundle params = new Bundle();
-
-        if (searchQuery != null && searchQuery.length() > 0) {
-            Toast.makeText(getActivity(), "Searching for: " + searchQuery, Toast.LENGTH_SHORT).show();
-            params.putString("q", searchQuery);
-        }
-
-        Bundle args = new Bundle();
-        args.putParcelable(ARGS_URI, uri);
-        args.putParcelable(ARGS_PARAMS, params);
-        args.putBoolean(ARGS_RELOAD, reset);
-        return args;
-    }
 
     @Override
     public Loader<SerialLoader.RestResponse<ZebiaResponse>> onCreateLoader(int id, Bundle args) {
@@ -288,6 +244,30 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onLoaderReset(Loader<SerialLoader.RestResponse<ZebiaResponse>> loader) {
         Log.d(LOG_TAG, "Begin onLoaderReset()");
+    }
+
+    private Bundle getBundle(boolean reset) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String ip = sharedPreferences.getString(SettingsActivity.PREF_IP, "0.0.0.0");
+        String port = sharedPreferences.getString(SettingsActivity.PREF_PORT, "3000");
+        String mountpoint = sharedPreferences.getString(SettingsActivity.PREF_MPOINT, "zebia");
+
+        StringBuilder sb = new StringBuilder("http://").append(ip).append(":").append(port).append("/").append(mountpoint).append("/");
+        sb.append("items-page-1.json");
+
+        Uri uri = Uri.parse(sb.toString());
+        Bundle params = new Bundle();
+
+        if (searchQuery != null && searchQuery.length() > 0) {
+            Toast.makeText(getActivity(), "Searching for: " + searchQuery, Toast.LENGTH_SHORT).show();
+            params.putString("q", searchQuery);
+        }
+
+        Bundle args = new Bundle();
+        args.putParcelable(ARGS_URI, uri);
+        args.putParcelable(ARGS_PARAMS, params);
+        args.putBoolean(ARGS_RELOAD, reset);
+        return args;
     }
 
     // ---------------------------------------------------------------------------------------------------

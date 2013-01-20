@@ -6,6 +6,10 @@ import com.zebia.fragments.SettingsFragment;
 
 public class SettingsActivity extends Activity {
 
+    public static final String PREF_IP = "preference_ip";
+    public static final String PREF_PORT = "preference_port";
+    public static final String PREF_MPOINT = "preference_mountpoint";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

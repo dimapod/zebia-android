@@ -3,9 +3,12 @@ package com.zebia.fragments;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.LoaderManager;
+import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView;
@@ -15,11 +18,13 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.zebia.R;
+import com.zebia.SettingsActivity;
 import com.zebia.adapter.ItemArrayAdapter;
 import com.zebia.dao.StorageItemsHelper;
 import com.zebia.loaders.SerialLoader;
 import com.zebia.model.Item;
 import com.zebia.model.ZebiaResponse;
+import com.zebia.utils.Animations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +40,7 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
     private static final String ARGS_URI = "com.zebia.fragments.ItemListFragment.ARGS_URI";
     private static final String ARGS_PARAMS = "com.zebia.fragments.ItemListFragment.ARGS_PARAMS";
     private static final String ARGS_RELOAD = "com.zebia.fragments.ItemListFragment.ARGS_RELOAD";
+    private static final int REQUEST_CODE_PREFERENCES = 1;
     private ItemArrayAdapter itemsAdapter;
     private Gson gson = new GsonBuilder().create();
     private SearchView searchView;
@@ -53,10 +59,12 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
         Log.d(LOG_TAG, "Begin onActivityCreated()");
 
         getActivity().getActionBar().setDisplayShowTitleEnabled(false);
-//        getActivity().getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-//        ArrayAdapter<String> a = new ArrayAdapter<String>(getActivity(),
-//                android.R.layout.simple_list_item_1, new String[]{"Group1", "Group2"});
-//        getActivity().getActionBar().setListNavigationCallbacks(a, this);
+
+        // Spinner at action bar
+        //        getActivity().getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        //        ArrayAdapter<String> a = new ArrayAdapter<String>(getActivity(),
+        //                android.R.layout.simple_list_item_1, new String[]{"Group1", "Group2"});
+        //        getActivity().getActionBar().setListNavigationCallbacks(a, this);
 
         itemsAdapter = new ItemArrayAdapter(getActivity(), R.layout.item_list);
         ListView listView = (ListView) getView().findViewById(R.id.item_list);
@@ -158,6 +166,15 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
             case R.id.menu_synchronisation:
                 synchronization();
                 break;
+            case R.id.menu_preferences:
+
+                // When the button is clicked, launch an activity through this intent
+                Intent launchPreferencesIntent = new Intent().setClass(getActivity(), SettingsActivity.class);
+
+                // Make it a subactivity so we know when it returns
+                startActivityForResult(launchPreferencesIntent, REQUEST_CODE_PREFERENCES);
+
+                break;
         }
 
         return true;
@@ -202,7 +219,16 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
     // ---------------------------------------------------------------------------------------------------
 
     private Bundle getBundle(boolean reset) {
-        Uri uri = Uri.parse("http://192.168.0.18:3000/zebia/items-page-1.json");
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String ip = sharedPreferences.getString("preference_ip", "0.0.0.0");
+        String port = sharedPreferences.getString("preference_port", "3000");
+        String mountpoint = sharedPreferences.getString("preference_mountpoint", "zebia");
+
+        StringBuilder sb = new StringBuilder("http://").append(ip).append(":").append(port).append("/").append(mountpoint).append("/");
+        sb.append("items-page-1.json");
+
+        Uri uri = Uri.parse(sb.toString());
         Bundle params = new Bundle();
 
         if (searchQuery != null && searchQuery.length() > 0) {

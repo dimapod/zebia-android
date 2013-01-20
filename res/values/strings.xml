@@ -3,4 +3,17 @@
     <string name="app_name">zebia-android</string>
     <string name="menu_synchronisation">Sync</string>
     <string name="action_bar_search">Search</string>
+
+    <string name="preferences_category_connection">Connection</string>
+    <string name="preference_ip_dialog_title">Enter server ip address</string>
+    <string name="preference_ip_summary">Server ip address</string>
+    <string name="preference_ip">IP</string>
+    <string name="menu_preferences">Preferences</string>
+    <string name="fragment_preferences">Preferences</string>
+    <string name="preference_mountpoint">Context</string>
+    <string name="preference_mountpoint_summary">Server mount-point</string>
+    <string name="preference_mountpoint_dialog_title">Enter server mountpoint</string>
+    <string name="preference_port">Port</string>
+    <string name="preference_port_summary">Server port</string>
+    <string name="preference_port_dialog_title">Enter server port</string>
 </resources>

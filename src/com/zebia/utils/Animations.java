@@ -1,4 +1,4 @@
-package com.zebia.fragments;
+package com.zebia.utils;
 
 import android.view.animation.*;
 

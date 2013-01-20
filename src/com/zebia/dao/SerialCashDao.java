@@ -6,32 +6,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 import android.util.Log;
 import com.google.gson.Gson;
-import com.zebia.model.Item;
 import com.zebia.model.ZebiaResponse;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class ItemsDao {
-    private static ItemsDao instance;
+public class SerialCashDao<T> {
     private Gson gson;
 
     private StorageItemsHelper storageItemsHelper;
+    private Class<? extends T> type;
 
-    public ItemsDao(StorageItemsHelper storageItemsHelper) {
+    public SerialCashDao(StorageItemsHelper storageItemsHelper, Class<T> type) {
         this.storageItemsHelper = storageItemsHelper;
         this.gson = new Gson();
-    }
-
-    public static ItemsDao init(StorageItemsHelper storageItemsHelper) {
-        if (instance == null) {
-            instance = new ItemsDao(storageItemsHelper);
-        }
-        return instance;
-    }
-
-    public static ItemsDao getInstance() {
-        return instance;
+        this.type = type;
     }
 
     public interface ItemEntry extends BaseColumns {
@@ -39,7 +25,6 @@ public class ItemsDao {
 
         String COLUMN_JSON = "json";
 
-        int COLUMN_INDEX_ID = 0;
         int COLUMN_INDEX_JSON = 1;
 
         String[] COLUMNS = {_ID, COLUMN_JSON};
@@ -51,23 +36,23 @@ public class ItemsDao {
                     ItemEntry.COLUMN_JSON + " TEXT" +
                     " )";
 
-    private ContentValues serialize(ZebiaResponse zebiaResponse) {
+    private ContentValues serialize(T zebiaResponse) {
         ContentValues values = new ContentValues();
         values.put(ItemEntry.COLUMN_JSON, gson.toJson(zebiaResponse));
         return values;
     }
 
-    private ZebiaResponse deserialize(Cursor cursor) {
+    private T deserialize(Cursor cursor) {
         String json = cursor.getString(ItemEntry.COLUMN_INDEX_JSON);
-        return gson.fromJson(json, ZebiaResponse.class);
+        return gson.fromJson(json, type);
     }
 
-    public void save(ZebiaResponse zebiaResponse) {
+    public void save(T zebiaResponse) {
         SQLiteDatabase sqLiteDatabase = storageItemsHelper.getWritableDatabase();
         sqLiteDatabase.insert(ItemEntry.TABLE_NAME, null, serialize(zebiaResponse));
     }
 
-    public ZebiaResponse restore() {
+    public T restore() {
         Cursor cursor = null;
         try {
             cursor = storageItemsHelper.getReadableDatabase().query(ItemEntry.TABLE_NAME, ItemEntry.COLUMNS, null, null, null, null, null);

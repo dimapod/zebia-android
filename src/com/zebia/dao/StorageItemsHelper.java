@@ -15,12 +15,12 @@ public class StorageItemsHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(ItemsDao.SQL_CREATE_ENTRIES);
+        db.execSQL(SerialCashDao.SQL_CREATE_ENTRIES);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + ItemsDao.ItemEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + SerialCashDao.ItemEntry.TABLE_NAME);
 
         // Create tables again
         onCreate(db);

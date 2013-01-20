@@ -16,9 +16,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.zebia.R;
 import com.zebia.adapter.ItemArrayAdapter;
-import com.zebia.dao.ItemsDao;
 import com.zebia.dao.StorageItemsHelper;
-import com.zebia.loaders.ZebiaLoader;
+import com.zebia.loaders.SerialLoader;
 import com.zebia.model.Item;
 import com.zebia.model.ZebiaResponse;
 
@@ -27,7 +26,7 @@ import java.util.List;
 
 public class ItemListFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener,
         ActionBar.OnNavigationListener,
-        LoaderManager.LoaderCallbacks<ZebiaLoader.RestResponse>,
+        LoaderManager.LoaderCallbacks<SerialLoader.RestResponse<ZebiaResponse>>,
         SearchView.OnQueryTextListener {
 
     public static final String BUNDLE_MODE = "BUNDLE.MODE";
@@ -62,10 +61,9 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
         itemsAdapter = new ItemArrayAdapter(getActivity(), R.layout.item_list);
         ListView listView = (ListView) getView().findViewById(R.id.item_list);
         listView.setAdapter(itemsAdapter);
-//        listView.setLayoutAnimation(Animations.listAnimation());
+        listView.setLayoutAnimation(Animations.listAnimation());
 
         StorageItemsHelper storageItemsHelper = new StorageItemsHelper(getActivity());
-        ItemsDao.init(storageItemsHelper);
 //        GroupsDao.init(storageItemsHelper);
 
         // TODO delete
@@ -131,7 +129,6 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
 
         super.onResume();
         itemsAdapter.clear();
-//        itemsAdapter.addAll(ItemsDao.getInstance().read());
     }
 
     @Override
@@ -139,9 +136,6 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
         Log.d(LOG_TAG, "Begin onPause()");
 
         super.onPause();
-//        // TODO: save all
-//        ItemsDao.getInstance().delete();
-//        ItemsDao.getInstance().create(itemsAdapter.getData());
     }
 
     @Override
@@ -224,21 +218,21 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
     }
 
     @Override
-    public Loader<ZebiaLoader.RestResponse> onCreateLoader(int id, Bundle args) {
+    public Loader<SerialLoader.RestResponse<ZebiaResponse>> onCreateLoader(int id, Bundle args) {
         Log.d(LOG_TAG, "Begin onCreateLoader()");
 
         if (args != null && args.containsKey(ARGS_URI) /* && args.containsKey(ARGS_PARAMS) */) {
             Uri action = args.getParcelable(ARGS_URI);
             Bundle params = args.getParcelable(ARGS_PARAMS);
             Boolean reload = args.getBoolean(ARGS_RELOAD);
-            return new ZebiaLoader(getActivity(), ZebiaLoader.HTTPVerb.GET, action, params, reload);
+            return new SerialLoader(getActivity(), SerialLoader.HTTPVerb.GET, action, params, reload, ZebiaResponse.class);
         }
 
         return null;
     }
 
     @Override
-    public void onLoadFinished(Loader<ZebiaLoader.RestResponse> loader, ZebiaLoader.RestResponse data) {
+    public void onLoadFinished(Loader<SerialLoader.RestResponse<ZebiaResponse>> loader, SerialLoader.RestResponse<ZebiaResponse> data) {
 
         Log.d(LOG_TAG, "Begin onLoadFinished()");
 
@@ -247,7 +241,7 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
         // Check to see if we got an HTTP 200 code and have some data.
         if (code == 200) {
             itemsAdapter.clear();
-            itemsAdapter.addAll(data.getZebiaResponse().getResults());
+            itemsAdapter.addAll(data.getData().getResults());
         } else {
             Toast.makeText(getActivity(), "Failed to load data. Check your internet settings.",
                     Toast.LENGTH_SHORT).show();
@@ -266,7 +260,7 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
     }
 
     @Override
-    public void onLoaderReset(Loader<ZebiaLoader.RestResponse> loader) {
+    public void onLoaderReset(Loader<SerialLoader.RestResponse<ZebiaResponse>> loader) {
         Log.d(LOG_TAG, "Begin onLoaderReset()");
     }
 

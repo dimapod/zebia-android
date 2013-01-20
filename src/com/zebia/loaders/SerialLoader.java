@@ -6,8 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import com.google.gson.Gson;
-import com.zebia.dao.ItemsDao;
-import com.zebia.model.ZebiaResponse;
+import com.zebia.dao.SerialCashDao;
+import com.zebia.dao.StorageItemsHelper;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -26,16 +26,16 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SericalLoader extends AsyncTaskLoader<SericalLoader.RestResponse> {
-    private static final String TAG = SericalLoader.class.getName();
+public class SerialLoader<T> extends AsyncTaskLoader<SerialLoader.RestResponse> {
+    private static final String TAG = SerialLoader.class.getName();
 
-    // We use this delta to determine if our cached data is
-    // old or not. The value we have here is 10 minutes;
+    // We use this delta to determine if our cached data is old or not. The value we have here is 10 minutes;
     private static final long STALE_DELTA = 600000;
     private static final String LOG_TAG = "Zebia";
 
     private Gson gson = new Gson();
     private boolean mReload = true;
+    private final Class<T> mType;
 
     public enum HTTPVerb {
         GET,
@@ -44,15 +44,15 @@ public class SericalLoader extends AsyncTaskLoader<SericalLoader.RestResponse> {
         DELETE
     }
 
-    public static class RestResponse {
-        private ZebiaResponse zebiaResponse;
+    public static class RestResponse<T> {
+        private T response;
         private int code;
 
         public RestResponse() {
         }
 
-        public RestResponse(ZebiaResponse zebiaResponse, int code) {
-            this.zebiaResponse = zebiaResponse;
+        public RestResponse(T response, int code) {
+            this.response = response;
             this.code = code;
         }
 
@@ -60,8 +60,8 @@ public class SericalLoader extends AsyncTaskLoader<SericalLoader.RestResponse> {
             return code;
         }
 
-        public ZebiaResponse getZebiaResponse() {
-            return zebiaResponse;
+        public T getData() {
+            return response;
         }
     }
 
@@ -69,27 +69,20 @@ public class SericalLoader extends AsyncTaskLoader<SericalLoader.RestResponse> {
     private Uri mAction;
     private Bundle mParams;
     private RestResponse mRestResponse;
+    private SerialCashDao<T> serialCashDao;
 
     private long mLastLoad;
 
-//    public ZebiaLoader(Context context) {
-//        super(context);
-//    }
-//
-//    public ZebiaLoader(Context context, HTTPVerb verb, Uri action) {
-//        super(context);
-//
-//        mVerb = verb;
-//        mAction = action;
-//    }
-
-    public SericalLoader(Context context, HTTPVerb verb, Uri action, Bundle params, boolean reload) {
+    public SerialLoader(Context context, HTTPVerb verb, Uri action, Bundle params, boolean reload, Class<T> type) {
         super(context);
 
         mVerb = verb;
         mAction = action;
         mParams = params;
         mReload = reload;
+        mType = type;
+
+        serialCashDao = new SerialCashDao<T>(new StorageItemsHelper(context), type);
     }
 
     @Override
@@ -116,9 +109,9 @@ public class SericalLoader extends AsyncTaskLoader<SericalLoader.RestResponse> {
                     if (mReload == false) {
                         Log.d(LOG_TAG, "Trying to load data from db cache");
                         // Try to fetch data from cache
-                        ZebiaResponse zebiaResponse = ItemsDao.getInstance().restore();
-                        if (zebiaResponse != null) {
-                            return new RestResponse(zebiaResponse, 200);
+                        T response = serialCashDao.restore();
+                        if (response != null) {
+                            return new RestResponse(response, 200);
                         }
                         Log.d(LOG_TAG, "Cache is empty... fetching from net");
                     }
@@ -185,16 +178,16 @@ public class SericalLoader extends AsyncTaskLoader<SericalLoader.RestResponse> {
                 // Here we create our response and send it back to the LoaderCallbacks<RestResponse> implementation.
                 String responseJson = responseEntity != null ? EntityUtils.toString(responseEntity) : null;
 
-                ZebiaResponse zebiaResponse = null;
+                T responseObj = null;
                 if (responseJson != null) {
-                    zebiaResponse = parse(responseJson);
-                    if (zebiaResponse == null) {
+                    responseObj = parse(responseJson);
+                    if (responseObj == null) {
                         statusCode = -1;
                     }
                     Log.d(LOG_TAG, "Saving data to cache...");
-                    ItemsDao.getInstance().save(zebiaResponse);
+                    serialCashDao.save(responseObj);
                 }
-                RestResponse restResponse = new RestResponse(zebiaResponse, statusCode);
+                RestResponse restResponse = new RestResponse(responseObj, statusCode);
                 return restResponse;
             }
 
@@ -312,9 +305,9 @@ public class SericalLoader extends AsyncTaskLoader<SericalLoader.RestResponse> {
         return formList;
     }
 
-    private ZebiaResponse parse(String json) {
+    private T parse(String json) {
         try {
-            return gson.fromJson(json, ZebiaResponse.class);
+            return gson.fromJson(json, mType);
         } catch (Exception e) {
             Log.e(LOG_TAG, "Failed to parse JSON.", e);
             e.printStackTrace();

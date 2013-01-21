@@ -49,6 +49,7 @@ public class SerialCashDao<T> {
 
     public void save(T zebiaResponse) {
         SQLiteDatabase sqLiteDatabase = storageItemsHelper.getWritableDatabase();
+        sqLiteDatabase.delete(ItemEntry.TABLE_NAME, null, null);
         sqLiteDatabase.insert(ItemEntry.TABLE_NAME, null, serialize(zebiaResponse));
     }
 

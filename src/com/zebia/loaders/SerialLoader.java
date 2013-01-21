@@ -184,7 +184,7 @@ public class SerialLoader<T> extends AsyncTaskLoader<SerialLoader.RestResponse> 
                     if (responseObj == null) {
                         statusCode = -1;
                     }
-                    Log.d(LOG_TAG, "Saving data to cash...");
+                    Log.d(LOG_TAG, "Saving data to cache...");
                     serialCashDao.save(responseObj);
                 }
                 RestResponse restResponse = new RestResponse(responseObj, statusCode);

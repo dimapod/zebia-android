@@ -57,7 +57,7 @@ public class MainActivity extends Activity implements ItemListFragment.OnItemSel
         ItemDetailsFragment details = (ItemDetailsFragment)
                 getFragmentManager().findFragmentById(R.id.details);
 
-        if (details == null || details.getIndex() != index) {
+        if (details == null || details.getIndex() != mCurCheckPosition) {
             // Make new fragment to show this selection.
             details = new ItemDetailsFragment(index, item);
 

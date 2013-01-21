@@ -45,20 +45,21 @@ public class MainActivity extends Activity implements ItemListFragment.OnItemSel
         }
 
         if (mDualPane) {
-            showDetails(mCurCheckPosition);
+            showDetails(mCurCheckPosition, null);
         }
     }
 
 
-    void showDetails(int index) {
+    void showDetails(int index, Item item) {
         mCurCheckPosition = index;
 
         // Check what fragment is currently shown, replace if needed.
         ItemDetailsFragment details = (ItemDetailsFragment)
                 getFragmentManager().findFragmentById(R.id.details);
-        if (details == null || details.getShownIndex() != index) {
+
+        if (details == null || details.getIndex() != index) {
             // Make new fragment to show this selection.
-            details = ItemDetailsFragment.newInstance(index);
+            details = new ItemDetailsFragment(index, item);
 
             // Execute a transaction, replacing any existing fragment
             // with this one inside the frame.
@@ -86,6 +87,6 @@ public class MainActivity extends Activity implements ItemListFragment.OnItemSel
     // Fragment callback
     @Override
     public void onItemSelected(int index, Item item) {
-        showDetails(index);
+        showDetails(index, item);
     }
 }

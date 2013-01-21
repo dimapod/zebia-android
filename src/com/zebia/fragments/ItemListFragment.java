@@ -160,7 +160,10 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
         getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH, getBundle(true), this);
     }
 
-    // Listeners -------------------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------
+    // Listeners -----------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------
+
     @Override
     public void onClick(View view) {
         //        switch (view.getId()) {

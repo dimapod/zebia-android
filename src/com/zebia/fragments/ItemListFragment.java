@@ -1,9 +1,6 @@
 package com.zebia.fragments;
 
-import android.app.ActionBar;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.app.LoaderManager;
+import android.app.*;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
@@ -16,27 +13,19 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.zebia.DetailActivity;
 import com.zebia.R;
 import com.zebia.SettingsActivity;
 import com.zebia.adapter.ItemArrayAdapter;
-import com.zebia.dao.StorageItemsHelper;
 import com.zebia.loaders.SerialLoader;
 import com.zebia.model.Item;
 import com.zebia.model.ZebiaResponse;
 import com.zebia.utils.Animations;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ItemListFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener,
         ActionBar.OnNavigationListener,
         LoaderManager.LoaderCallbacks<SerialLoader.RestResponse<ZebiaResponse>>,
         SearchView.OnQueryTextListener {
 
-    public static final String BUNDLE_MODE = "BUNDLE.MODE";
     public static final String LOG_TAG = ItemListFragment.class.getName();
     private static final int LOADER_ITEMS_SEARCH = 0x1;
     private static final String ARGS_URI = "com.zebia.fragments.ItemListFragment.ARGS_URI";
@@ -47,10 +36,8 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
     private ItemArrayAdapter itemsAdapter;
     private SearchView searchView;
     private String searchQuery = null;
-    private boolean mDualPane;
-    private int mCurCheckPosition = 0;
-
     private ListView listView;
+    private OnItemSelectedListener onItemSelectedListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,31 +67,11 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
         // Register all listeners and fetch views
         registerElements();
 
-
-        // Check to see if we have a frame in which to embed the details
-        // fragment directly in the containing UI.
-        View detailsFrame = getActivity().findViewById(R.id.details);
-        mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
-
-        if (savedInstanceState != null) {
-            // Restore last state for checked position.
-            mCurCheckPosition = savedInstanceState.getInt("curChoice", 0);
-        }
-
-        if (mDualPane) {
-            // In dual-pane mode, the list view highlights the selected item.
-            listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-            // Make sure our UI is in the correct state.
-            showDetails(mCurCheckPosition);
-        }
-
         // Initialize the Loader.
         getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH, getBundle(false), this);
     }
 
     private void registerElements() {
-        //        editTextNewItem = (EditText) getView().findViewById(R.id.et_new_item);
-
         ((ListView) getView().findViewById(R.id.item_list)).setOnItemClickListener(this);
     }
 
@@ -130,61 +97,13 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
         super.onPrepareOptionsMenu(menu);
     }
 
-    // ---------------------------------------------------------------------------------------------------
-    // -- DETAILS FRAGMENT -------------------------------------------------------------------------------
-    // ---------------------------------------------------------------------------------------------------
-
-    /**
-     * Helper function to show the details of a selected item, either by
-     * displaying a fragment in-place in the current UI, or starting a
-     * whole new activity in which it is displayed.
-     */
-    void showDetails(int index) {
-        mCurCheckPosition = index;
-
-        if (mDualPane) {
-            // We can display everything in-place with fragments, so update
-            // the list to highlight the selected item and show the data.
-            listView.setItemChecked(index, true);
-
-            // Check what fragment is currently shown, replace if needed.
-            ItemDetailsFragment details = (ItemDetailsFragment)
-                    getFragmentManager().findFragmentById(R.id.details);
-            if (details == null || details.getShownIndex() != index) {
-                // Make new fragment to show this selection.
-                details = ItemDetailsFragment.newInstance(index);
-
-                // Execute a transaction, replacing any existing fragment
-                // with this one inside the frame.
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.details, details);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.commit();
-            }
-
-        } else {
-            // Otherwise we need to launch a new activity to display
-            // the dialog fragment with selected text.
-//            Intent intent = new Intent();
-//            intent.setClass(getActivity(), DetailActivity.class);
-//            intent.putExtra("index", index);
-//            startActivity(intent);
-
-            // Check what fragment is currently shown, replace if needed.
-            ItemDetailsFragment details = (ItemDetailsFragment)
-                    getFragmentManager().findFragmentById(R.id.details);
-            if (details == null || details.getShownIndex() != index) {
-                // Make new fragment to show this selection.
-                details = ItemDetailsFragment.newInstance(index);
-
-                // Execute a transaction, replacing any existing fragment
-                // with this one inside the frame.
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.article_fragment, details);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.addToBackStack(null);
-                ft.commit();
-            }
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            onItemSelectedListener = (OnItemSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement OnItemSelectedListener");
         }
     }
 
@@ -195,7 +114,6 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("curChoice", mCurCheckPosition);
     }
 
     @Override
@@ -254,9 +172,8 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.d(LOG_TAG, "Begin onItemClick()");
+        onItemSelectedListener.onItemSelected(position, itemsAdapter.getItem(position));
 
-        showDetails(position);
         //        itemsAdapter.notifyDataSetChanged();
     }
 
@@ -350,4 +267,8 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
         return false;
     }
 
+    // Fragment / Activity communication
+    public interface OnItemSelectedListener {
+        public void onItemSelected(int index, Item item);
+    }
 }

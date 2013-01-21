@@ -43,7 +43,6 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
     private static final int REQUEST_CODE_PREFERENCES = 1;
 
     private ItemArrayAdapter itemsAdapter;
-    private Gson gson = new GsonBuilder().create();
     private SearchView searchView;
     private String searchQuery = null;
 
@@ -71,8 +70,6 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
         ListView listView = (ListView) getView().findViewById(R.id.item_list);
         listView.setAdapter(itemsAdapter);
         listView.setLayoutAnimation(Animations.listAnimation());
-
-        StorageItemsHelper storageItemsHelper = new StorageItemsHelper(getActivity());
 
         // Restore state
         //        if (savedInstanceState != null) {
@@ -121,15 +118,12 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onResume() {
         Log.d(LOG_TAG, "Begin onResume()");
-
         super.onResume();
-        itemsAdapter.clear();
     }
 
     @Override
     public void onPause() {
         Log.d(LOG_TAG, "Begin onPause()");
-
         super.onPause();
     }
 
@@ -228,17 +222,6 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
             Toast.makeText(getActivity(), "Failed to load data. Check your internet settings.",
                     Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private List<Item> parse(String json) {
-        try {
-            ZebiaResponse zebiaResponse = gson.fromJson(json, ZebiaResponse.class);
-            return zebiaResponse.getResults();
-        } catch (Exception e) {
-            Log.e(LOG_TAG, "Failed to parse JSON.", e);
-            e.printStackTrace();
-        }
-        return new ArrayList<Item>();
     }
 
     @Override

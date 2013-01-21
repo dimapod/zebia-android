@@ -16,4 +16,5 @@
     <string name="preference_port">Port</string>
     <string name="preference_port_summary">Server port</string>
     <string name="preference_port_dialog_title">Enter server port</string>
+    <string name="item_details_activity">Item Details</string>
 </resources>

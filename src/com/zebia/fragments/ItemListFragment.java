@@ -17,7 +17,8 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.zebia.R;
 import com.zebia.SettingsActivity;
 import com.zebia.adapter.ItemArrayAdapter;
-import com.zebia.loaders.RestParamBuilder;
+import com.zebia.loaders.params.DevParamsMapper;
+import com.zebia.loaders.params.RestParamBuilder;
 import com.zebia.loaders.SerialLoader;
 import com.zebia.model.Item;
 import com.zebia.model.ZebiaResponse;
@@ -42,6 +43,7 @@ public class ItemListFragment extends Fragment implements
     private PullToRefreshListView pullToRefreshListView;
 
     private int lastLoadedPage = 1;
+    private DevParamsMapper paramsMapper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,8 @@ public class ItemListFragment extends Fragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        this.paramsMapper = new DevParamsMapper();
 
         if (savedInstanceState != null) {
             lastLoadedPage = savedInstanceState.getInt(KEY_SAVED_PAGE);
@@ -188,9 +192,12 @@ public class ItemListFragment extends Fragment implements
         int code = data.getCode();
 
         if (code == 200) {
-            itemsAdapter.clear();
-            itemsAdapter.addAll(data.getData().getResults());
             lastLoadedPage = data.getData().getPage();
+
+            if (lastLoadedPage == 1) {  // TODO: not good
+                itemsAdapter.clear();
+            }
+            itemsAdapter.addAll(data.getData().getResults());
 
             Toast.makeText(getActivity(), "Loaded page: " + lastLoadedPage, Toast.LENGTH_SHORT).show();
         } else {
@@ -216,7 +223,7 @@ public class ItemListFragment extends Fragment implements
         this.lastLoadedPage = 0;
 
         getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH,
-                new RestParamBuilder(getActivity()).setSearchQuery(searchQuery).build(), this);
+                new RestParamBuilder(getActivity(), paramsMapper).setSearchQuery(searchQuery).build(), this);
 
         return true;
     }
@@ -257,11 +264,11 @@ public class ItemListFragment extends Fragment implements
 
     private void synchronization() {
         getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH,
-                new RestParamBuilder(getActivity()).setSearchQuery(searchQuery).build(), this);
+                new RestParamBuilder(getActivity(), paramsMapper).setSearchQuery(searchQuery).build(), this);
     }
 
     private void loadNextPage() {
-        Bundle params = new RestParamBuilder(getActivity()).setSearchQuery(searchQuery)
+        Bundle params = new RestParamBuilder(getActivity(), paramsMapper).setSearchQuery(searchQuery)
                 .setPageToLoad(lastLoadedPage + 1).build();
         getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH, params, this);
     }

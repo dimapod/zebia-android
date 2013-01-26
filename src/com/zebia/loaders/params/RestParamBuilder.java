@@ -1,8 +1,7 @@
-package com.zebia.loaders;
+package com.zebia.loaders.params;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import com.zebia.SettingsActivity;
@@ -21,25 +20,25 @@ public class RestParamBuilder {
     private String searchQuery;
     private int pageToLoad = -1;
     private boolean forceLoad = true;
+    private final ParamsMapper paramsMapper;
 
     public RestParamBuilder(Context context) {
         this.context = context;
+        this.paramsMapper = new BaseParamsMapper();
+    }
+
+    public RestParamBuilder(Context context, ParamsMapper paramsMapper) {
+        this.context = context;
+        this.paramsMapper = paramsMapper;
     }
 
     public Bundle build() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String ip = sharedPreferences.getString(SettingsActivity.PREF_IP, "");
         String port = sharedPreferences.getString(SettingsActivity.PREF_PORT, DEF_PORT);
-        String mountpoint = sharedPreferences.getString(SettingsActivity.PREF_MPOINT, DEF_MOUNTPOINT);
+        String mountPoint = sharedPreferences.getString(SettingsActivity.PREF_MPOINT, DEF_MOUNTPOINT);
 
-        StringBuilder sb = new StringBuilder("http://").append(ip).append(":").append(port).append("/").append(mountpoint).append("/");
-        sb.append("items-page-1.json");
-
-        Bundle args = new Bundle();
-        args.putParcelable(ARGS_URI, Uri.parse(sb.toString()));
-        args.putParcelable(ARGS_PARAMS, buildParams());
-        args.putBoolean(ARGS_RELOAD, forceLoad);
-        return args;
+        return paramsMapper.map(ip, port, mountPoint, this);
     }
 
     private Bundle buildParams() {
@@ -67,5 +66,17 @@ public class RestParamBuilder {
     public RestParamBuilder setSearchQuery(String searchQuery) {
         this.searchQuery = searchQuery;
         return this;
+    }
+
+    public boolean isForceLoad() {
+        return forceLoad;
+    }
+
+    public int getPageToLoad() {
+        return pageToLoad;
+    }
+
+    public String getSearchQuery() {
+        return searchQuery;
     }
 }

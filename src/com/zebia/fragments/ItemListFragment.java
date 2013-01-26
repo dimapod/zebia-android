@@ -3,10 +3,8 @@ package com.zebia.fragments;
 import android.app.*;
 import android.content.Intent;
 import android.content.Loader;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.*;
@@ -19,6 +17,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.zebia.R;
 import com.zebia.SettingsActivity;
 import com.zebia.adapter.ItemArrayAdapter;
+import com.zebia.loaders.RestParamBuilder;
 import com.zebia.loaders.SerialLoader;
 import com.zebia.model.Item;
 import com.zebia.model.ZebiaResponse;
@@ -33,9 +32,6 @@ public class ItemListFragment extends Fragment implements
     private static final String LOG_TAG = ItemListFragment.class.getName();
     private static final int LOADER_ITEMS_SEARCH = 0x1;
     private static final int REQUEST_CODE_PREFERENCES = 1;
-    private static final String ARGS_URI = "com.zebia.fragments.ItemListFragment.ARGS_URI";
-    private static final String ARGS_PARAMS = "com.zebia.fragments.ItemListFragment.ARGS_PARAMS";
-    private static final String ARGS_RELOAD = "com.zebia.fragments.ItemListFragment.ARGS_RELOAD";
 
     private static final String KEY_SAVED_PAGE = "CURRENT_PAGE";
 
@@ -45,7 +41,7 @@ public class ItemListFragment extends Fragment implements
     private OnItemSelectedListener onItemSelectedListener;
     private PullToRefreshListView pullToRefreshListView;
 
-    private int currentPage = 1;
+    private int lastLoadedPage = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,7 +54,7 @@ public class ItemListFragment extends Fragment implements
         super.onActivityCreated(savedInstanceState);
 
         if (savedInstanceState != null) {
-            currentPage = savedInstanceState.getInt(KEY_SAVED_PAGE);
+            lastLoadedPage = savedInstanceState.getInt(KEY_SAVED_PAGE);
         }
 
         getActivity().getActionBar().setDisplayShowTitleEnabled(false);
@@ -75,7 +71,7 @@ public class ItemListFragment extends Fragment implements
         listView.setOnItemClickListener(this);
 
         // Initialize the Loader.
-        getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH, getBundle(false), this);
+        //getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH, getBundle(false), this);
     }
 
     @Override
@@ -115,7 +111,7 @@ public class ItemListFragment extends Fragment implements
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putInt(KEY_SAVED_PAGE, currentPage);
+        outState.putInt(KEY_SAVED_PAGE, lastLoadedPage);
         super.onSaveInstanceState(outState);
     }
 
@@ -173,10 +169,11 @@ public class ItemListFragment extends Fragment implements
     public Loader<SerialLoader.RestResponse<ZebiaResponse>> onCreateLoader(int id, Bundle args) {
         Log.d(LOG_TAG, "Begin onCreateLoader()");
 
-        if (args != null && args.containsKey(ARGS_URI) /* && args.containsKey(ARGS_PARAMS) */) {
-            Uri action = args.getParcelable(ARGS_URI);
-            Bundle params = args.getParcelable(ARGS_PARAMS);
-            Boolean reload = args.getBoolean(ARGS_RELOAD);
+        if (args != null && args.containsKey(RestParamBuilder.ARGS_URI)) {
+            Uri action = args.getParcelable(RestParamBuilder.ARGS_URI);
+            Bundle params = args.getParcelable(RestParamBuilder.ARGS_PARAMS);
+            Boolean reload = args.getBoolean(RestParamBuilder.ARGS_RELOAD);
+
             return new SerialLoader(getActivity(), SerialLoader.HTTPVerb.GET, action, params, reload, ZebiaResponse.class);
         }
 
@@ -193,6 +190,9 @@ public class ItemListFragment extends Fragment implements
         if (code == 200) {
             itemsAdapter.clear();
             itemsAdapter.addAll(data.getData().getResults());
+            lastLoadedPage = data.getData().getPage();
+
+            Toast.makeText(getActivity(), "Loaded page: " + lastLoadedPage, Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getActivity(), "Failed to load data. Check your internet settings.",
                     Toast.LENGTH_SHORT).show();
@@ -202,31 +202,6 @@ public class ItemListFragment extends Fragment implements
     @Override
     public void onLoaderReset(Loader<SerialLoader.RestResponse<ZebiaResponse>> loader) {
         Log.d(LOG_TAG, "Begin onLoaderReset()");
-    }
-
-    private Bundle getBundle(boolean reset) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String ip = sharedPreferences.getString(SettingsActivity.PREF_IP, "0.0.0.0");
-        String port = sharedPreferences.getString(SettingsActivity.PREF_PORT, "3000");
-        String mountpoint = sharedPreferences.getString(SettingsActivity.PREF_MPOINT, "zebia");
-
-        StringBuilder sb = new StringBuilder("http://").append(ip).append(":").append(port).append("/").append(mountpoint).append("/");
-        sb.append("items-page-1.json");
-
-        Uri uri = Uri.parse(sb.toString());
-        Bundle params = new Bundle();
-
-        if (searchQuery != null && searchQuery.length() > 0) {
-            Toast.makeText(getActivity(), "Searching for: " + searchQuery, Toast.LENGTH_SHORT).show();
-            params.putString("q", searchQuery);
-        }
-        params.putInt("page", currentPage);
-
-        Bundle args = new Bundle();
-        args.putParcelable(ARGS_URI, uri);
-        args.putParcelable(ARGS_PARAMS, params);
-        args.putBoolean(ARGS_RELOAD, reset);
-        return args;
     }
 
     // ---------------------------------------------------------------------------------------------------
@@ -239,7 +214,8 @@ public class ItemListFragment extends Fragment implements
 
         this.searchQuery = query;
 
-        getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH, getBundle(true), this);
+        getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH,
+                new RestParamBuilder(getActivity()).setSearchQuery(searchQuery).build(), this);
 
         return true;
     }
@@ -260,17 +236,18 @@ public class ItemListFragment extends Fragment implements
 
     @Override
     public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-        if (refreshView.getCurrentMode() == PullToRefreshBase.Mode.PULL_FROM_END) {
-            Toast.makeText(getActivity(), "Next page", Toast.LENGTH_SHORT).show();
-        }
-
         String label = DateUtils.formatDateTime(getActivity().getApplicationContext(), System.currentTimeMillis(),
                 DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
 
         // Update the LastUpdatedLabel
         refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 
-        loadNextPage();
+        if (refreshView.getCurrentMode() == PullToRefreshBase.Mode.PULL_FROM_END) {
+            Toast.makeText(getActivity(), "Page to load: " + (lastLoadedPage + 1), Toast.LENGTH_SHORT).show();
+            loadNextPage();
+        } else {
+            synchronization();
+        }
     }
 
     // ---------------------------------------------------------------------------------------------------
@@ -278,12 +255,13 @@ public class ItemListFragment extends Fragment implements
     // ---------------------------------------------------------------------------------------------------
 
     private void synchronization() {
-        getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH, getBundle(true), this);
+        getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH,
+                new RestParamBuilder(getActivity()).setSearchQuery(searchQuery).build(), this);
     }
 
     private void loadNextPage() {
-        currentPage++;
-        getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH, getBundle(true), this);
+        Bundle params = new RestParamBuilder(getActivity()).setSearchQuery(searchQuery)
+                .setPageToLoad(lastLoadedPage + 1).build();
+        getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH, params, this);
     }
-
 }

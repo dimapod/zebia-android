@@ -152,7 +152,7 @@ public class ItemListFragment extends Fragment implements
     }
 
     // ---------------------------------------------------------------------------------------------------
-    // Listeners -----------------------------------------------------------------------------------------
+    // -- On item selected -------------------------------------------------------------------------------
     // ---------------------------------------------------------------------------------------------------
 
     @Override
@@ -213,6 +213,7 @@ public class ItemListFragment extends Fragment implements
         searchView.setIconified(true);
 
         this.searchQuery = query;
+        this.lastLoadedPage = 0;
 
         getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH,
                 new RestParamBuilder(getActivity()).setSearchQuery(searchQuery).build(), this);

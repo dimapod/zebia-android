@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_height="fill_parent"
+            android:layout_width="fill_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="vertical"
+                  android:layout_width="fill_parent"
+                  android:layout_height="fill_parent"
+                  android:paddingLeft="8dp"
+                  android:paddingRight="8dp"
+                  android:paddingTop="4dp"
+                  android:paddingBottom="4dp">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:orientation="horizontal"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content">
+
+            <TextView
+                    android:id="@+id/tx_detail_item_from_label"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="From: "
+                    android:textStyle="bold"
+                    android:textSize="14dp"
+                    android:singleLine="true"
+                    android:textColor="#3baeff"
+                    />
+
+            <TextView
+                    android:id="@+id/tx_detail_item_from_user"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="User name"
+                    android:textSize="14dp"
+                    android:singleLine="true"
+                    android:textColor="#3baeff"/>
+        </LinearLayout>
+
+        <TextView
+                android:id="@+id/tx_detail_item_text"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Text"
+                android:textSize="14dp"
+                android:paddingLeft="15dp"
+                android:paddingBottom="5dp"/>
+
+        <TextView
+                android:id="@+id/tx_detail_item_text_long_label"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Details: "
+                android:textStyle="bold"
+                android:textSize="14dp"
+                android:textColor="#f8ff7f"/>
+
+        <TextView
+                android:id="@+id/tx_detail_item_text_long"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Long text"
+                android:textSize="14dp"
+                android:paddingLeft="15dp"/>
+
+    </LinearLayout>
+</ScrollView>

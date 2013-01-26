@@ -14,13 +14,13 @@
           <!--android:icon="@drawable/ic_action_edit"-->
           <!--android:title="@string/menu_edit"-->
             <!--/>-->
-    <item android:id="@+id/action_search"
+    <item android:id="@+id/action_search_item"
           android:icon="@android:drawable/ic_menu_search"
           android:title="@string/action_bar_search"
           android:showAsAction="ifRoom"
           android:actionViewClass="android.widget.SearchView" />
 
-    <item android:id="@+id/menu_synchronisation"
+    <item android:id="@+id/menu_synchronisation_item"
           android:showAsAction="always|withText"
           android:icon="@drawable/ic_action_refresh"
           android:title="@string/menu_synchronisation"
@@ -28,7 +28,7 @@
 
     <!-- EDIT MODE -->
 
-    <item android:id="@+id/menu_preferences"
+    <item android:id="@+id/menu_preferences_item"
           android:showAsAction="never|withText"
           android:icon="@drawable/ic_action_settings"
           android:title="@string/menu_preferences"

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/action_search_song"
+          android:icon="@android:drawable/ic_menu_search"
+          android:title="@string/action_bar_search"
+          android:showAsAction="ifRoom"
+          android:actionViewClass="android.widget.SearchView" />
+
+    <item android:id="@+id/menu_synchronisation_song"
+          android:showAsAction="always|withText"
+          android:icon="@drawable/ic_action_refresh"
+          android:title="@string/menu_synchronisation" />
+
+    <item android:id="@+id/menu_preferences_song"
+          android:showAsAction="never|withText"
+          android:icon="@drawable/ic_action_settings"
+          android:title="@string/menu_preferences"
+          android:visible="true" />
+
+</menu>

@@ -18,27 +18,27 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.zebia.R;
 import com.zebia.SettingsActivity;
-import com.zebia.adapter.ItemArrayAdapter;
+import com.zebia.adapter.SongArrayAdapter;
 import com.zebia.loaders.SerialLoader;
 import com.zebia.loaders.params.DevParamsMapper;
 import com.zebia.loaders.params.RestParamBuilder;
 import com.zebia.model.Item;
-import com.zebia.model.ZebiaResponse;
+import com.zebia.model.ItemsResponse;
 import com.zebia.utils.Animations;
 
 public class SongListFragment extends Fragment implements
         AdapterView.OnItemClickListener,
-        LoaderManager.LoaderCallbacks<SerialLoader.RestResponse<ZebiaResponse>>,
+        LoaderManager.LoaderCallbacks<SerialLoader.RestResponse<ItemsResponse>>,
         SearchView.OnQueryTextListener,
         PullToRefreshBase.OnRefreshListener<ListView> {
 
     private static final String LOG_TAG = SongListFragment.class.getName();
-    private static final int LOADER_ITEMS_SEARCH = 0x1;
+    private static final int LOADER_SONGS_SEARCH = 0x2;
     private static final int REQUEST_CODE_PREFERENCES = 1;
 
     private static final String KEY_SAVED_PAGE = "CURRENT_PAGE";
 
-    private ItemArrayAdapter itemsAdapter;
+    private SongArrayAdapter songsAdapter;
     private SearchView searchView;
     private String searchQuery = null;
     private OnItemSelectedListener onItemSelectedListener;
@@ -65,19 +65,19 @@ public class SongListFragment extends Fragment implements
 
         getActivity().getActionBar().setDisplayShowTitleEnabled(false);
 
-        pullToRefreshListView = (PullToRefreshListView) getView().findViewById(R.id.item_list);
+        pullToRefreshListView = (PullToRefreshListView) getView().findViewById(R.id.song_list);
         pullToRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
         pullToRefreshListView.setOnRefreshListener(this);
 
-        itemsAdapter = new ItemArrayAdapter(getActivity());
+        songsAdapter = new SongArrayAdapter(getActivity());
 
         ListView listView = pullToRefreshListView.getRefreshableView();
-        listView.setAdapter(itemsAdapter);
+        listView.setAdapter(songsAdapter);
         listView.setLayoutAnimation(Animations.listAnimation());
         listView.setOnItemClickListener(this);
 
         // Initialize the Loader.
-        //getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH, getBundle(false), this);
+        //getLoaderManager().restartLoader(LOADER_SONGS_SEARCH, getBundle(false), this);
     }
 
     @Override
@@ -88,8 +88,8 @@ public class SongListFragment extends Fragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.action_bar_settings_action_provider, menu);
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        inflater.inflate(R.menu.action_bar_song_settings_action_provider, menu);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search_song).getActionView();
         searchView.setOnQueryTextListener(this);
 
         this.searchView = searchView;
@@ -141,13 +141,13 @@ public class SongListFragment extends Fragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.d(LOG_TAG, "Begin onOptionsItemSelected()");
 
-        Toast.makeText(getActivity(), "Selected Item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Selected song: " + item.getTitle(), Toast.LENGTH_SHORT).show();
 
         switch (item.getItemId()) {
-            case R.id.menu_synchronisation:
+            case R.id.menu_synchronisation_song:
                 synchronization();
                 break;
-            case R.id.menu_preferences:
+            case R.id.menu_preferences_song:
                 // Launch an activity through intent
                 Intent launchPreferencesIntent = new Intent().setClass(getActivity(), SettingsActivity.class);
                 startActivityForResult(launchPreferencesIntent, REQUEST_CODE_PREFERENCES);
@@ -163,8 +163,7 @@ public class SongListFragment extends Fragment implements
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        onItemSelectedListener.onItemSelected(position, itemsAdapter.getItem(position));
-        //        itemsAdapter.notifyDataSetChanged();
+        onItemSelectedListener.onItemSelected(position, songsAdapter.getItem(position));
     }
 
     // ---------------------------------------------------------------------------------------------------
@@ -172,7 +171,7 @@ public class SongListFragment extends Fragment implements
     // ---------------------------------------------------------------------------------------------------
 
     @Override
-    public Loader<SerialLoader.RestResponse<ZebiaResponse>> onCreateLoader(int id, Bundle args) {
+    public Loader<SerialLoader.RestResponse<ItemsResponse>> onCreateLoader(int id, Bundle args) {
         Log.d(LOG_TAG, "Begin onCreateLoader()");
 
         if (args != null && args.containsKey(RestParamBuilder.ARGS_URI)) {
@@ -180,14 +179,14 @@ public class SongListFragment extends Fragment implements
             Bundle params = args.getParcelable(RestParamBuilder.ARGS_PARAMS);
             Boolean reload = args.getBoolean(RestParamBuilder.ARGS_RELOAD);
 
-            return new SerialLoader(getActivity(), SerialLoader.HTTPVerb.GET, action, params, reload, ZebiaResponse.class);
+            return new SerialLoader(getActivity(), SerialLoader.HTTPVerb.GET, action, params, reload, ItemsResponse.class);
         }
 
         return null;
     }
 
     @Override
-    public void onLoadFinished(Loader<SerialLoader.RestResponse<ZebiaResponse>> loader, SerialLoader.RestResponse<ZebiaResponse> data) {
+    public void onLoadFinished(Loader<SerialLoader.RestResponse<ItemsResponse>> loader, SerialLoader.RestResponse<ItemsResponse> data) {
         pullToRefreshListView.onRefreshComplete();
         Log.d(LOG_TAG, "Begin onLoadFinished()");
 
@@ -197,9 +196,9 @@ public class SongListFragment extends Fragment implements
             lastLoadedPage = data.getData().getPage();
 
             if (lastLoadedPage == 1) {  // TODO: not good
-                itemsAdapter.clear();
+                songsAdapter.clear();
             }
-            itemsAdapter.addAll(data.getData().getResults());
+            songsAdapter.addAll(data.getData().getResults());
 
             Toast.makeText(getActivity(), "Loaded page: " + lastLoadedPage, Toast.LENGTH_SHORT).show();
         } else {
@@ -209,7 +208,7 @@ public class SongListFragment extends Fragment implements
     }
 
     @Override
-    public void onLoaderReset(Loader<SerialLoader.RestResponse<ZebiaResponse>> loader) {
+    public void onLoaderReset(Loader<SerialLoader.RestResponse<ItemsResponse>> loader) {
         Log.d(LOG_TAG, "Begin onLoaderReset()");
     }
 
@@ -224,7 +223,7 @@ public class SongListFragment extends Fragment implements
         this.searchQuery = query;
         this.lastLoadedPage = 0;
 
-        getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH,
+        getLoaderManager().restartLoader(LOADER_SONGS_SEARCH,
                 new RestParamBuilder(getActivity(), paramsMapper).setSearchQuery(searchQuery).build(), this);
 
         return true;
@@ -265,13 +264,13 @@ public class SongListFragment extends Fragment implements
     // ---------------------------------------------------------------------------------------------------
 
     private void synchronization() {
-        getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH,
+        getLoaderManager().restartLoader(LOADER_SONGS_SEARCH,
                 new RestParamBuilder(getActivity(), paramsMapper).setSearchQuery(searchQuery).build(), this);
     }
 
     private void loadNextPage() {
         Bundle params = new RestParamBuilder(getActivity(), paramsMapper).setSearchQuery(searchQuery)
                 .setPageToLoad(lastLoadedPage + 1).build();
-        getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH, params, this);
+        getLoaderManager().restartLoader(LOADER_SONGS_SEARCH, params, this);
     }
 }

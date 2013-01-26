@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class ZebiaResponse {
+public class ItemsResponse {
 
     private Integer page;
 

@@ -21,12 +21,12 @@ import com.zebia.loaders.params.DevParamsMapper;
 import com.zebia.loaders.params.RestParamBuilder;
 import com.zebia.loaders.SerialLoader;
 import com.zebia.model.Item;
-import com.zebia.model.ZebiaResponse;
+import com.zebia.model.ItemsResponse;
 import com.zebia.utils.Animations;
 
 public class ItemListFragment extends Fragment implements
         AdapterView.OnItemClickListener,
-        LoaderManager.LoaderCallbacks<SerialLoader.RestResponse<ZebiaResponse>>,
+        LoaderManager.LoaderCallbacks<SerialLoader.RestResponse<ItemsResponse>>,
         SearchView.OnQueryTextListener,
         PullToRefreshBase.OnRefreshListener<ListView> {
 
@@ -86,8 +86,8 @@ public class ItemListFragment extends Fragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.action_bar_settings_action_provider, menu);
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        inflater.inflate(R.menu.action_bar_item_settings_action_provider, menu);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search_item).getActionView();
         searchView.setOnQueryTextListener(this);
 
         this.searchView = searchView;
@@ -142,10 +142,10 @@ public class ItemListFragment extends Fragment implements
         Toast.makeText(getActivity(), "Selected Item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
 
         switch (item.getItemId()) {
-            case R.id.menu_synchronisation:
+            case R.id.menu_synchronisation_item:
                 synchronization();
                 break;
-            case R.id.menu_preferences:
+            case R.id.menu_preferences_item:
                 // Launch an activity through intent
                 Intent launchPreferencesIntent = new Intent().setClass(getActivity(), SettingsActivity.class);
                 startActivityForResult(launchPreferencesIntent, REQUEST_CODE_PREFERENCES);
@@ -170,7 +170,7 @@ public class ItemListFragment extends Fragment implements
     // ---------------------------------------------------------------------------------------------------
 
     @Override
-    public Loader<SerialLoader.RestResponse<ZebiaResponse>> onCreateLoader(int id, Bundle args) {
+    public Loader<SerialLoader.RestResponse<ItemsResponse>> onCreateLoader(int id, Bundle args) {
         Log.d(LOG_TAG, "Begin onCreateLoader()");
 
         if (args != null && args.containsKey(RestParamBuilder.ARGS_URI)) {
@@ -178,14 +178,14 @@ public class ItemListFragment extends Fragment implements
             Bundle params = args.getParcelable(RestParamBuilder.ARGS_PARAMS);
             Boolean reload = args.getBoolean(RestParamBuilder.ARGS_RELOAD);
 
-            return new SerialLoader(getActivity(), SerialLoader.HTTPVerb.GET, action, params, reload, ZebiaResponse.class);
+            return new SerialLoader(getActivity(), SerialLoader.HTTPVerb.GET, action, params, reload, ItemsResponse.class);
         }
 
         return null;
     }
 
     @Override
-    public void onLoadFinished(Loader<SerialLoader.RestResponse<ZebiaResponse>> loader, SerialLoader.RestResponse<ZebiaResponse> data) {
+    public void onLoadFinished(Loader<SerialLoader.RestResponse<ItemsResponse>> loader, SerialLoader.RestResponse<ItemsResponse> data) {
         pullToRefreshListView.onRefreshComplete();
         Log.d(LOG_TAG, "Begin onLoadFinished()");
 
@@ -207,7 +207,7 @@ public class ItemListFragment extends Fragment implements
     }
 
     @Override
-    public void onLoaderReset(Loader<SerialLoader.RestResponse<ZebiaResponse>> loader) {
+    public void onLoaderReset(Loader<SerialLoader.RestResponse<ItemsResponse>> loader) {
         Log.d(LOG_TAG, "Begin onLoaderReset()");
     }
 

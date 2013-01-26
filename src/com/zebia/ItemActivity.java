@@ -26,12 +26,12 @@ public class ItemActivity extends Activity implements ItemListFragment.OnItemSel
         ItemListFragment itemListFragment = new ItemListFragment();
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.list_fragment_layout, itemListFragment);
+        ft.replace(R.id.list_item_fragment_layout, itemListFragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
 
         // Check to see if we have a frame in which to embed the details fragment directly in the containing UI.
-        View detailsFrame = findViewById(R.id.details);
+        View detailsFrame = findViewById(R.id.details_item);
         mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
 
         if (savedInstanceState != null) {
@@ -52,7 +52,7 @@ public class ItemActivity extends Activity implements ItemListFragment.OnItemSel
 
         // Check what fragment is currently shown, replace if needed.
         ItemDetailsFragment details = (ItemDetailsFragment)
-                getFragmentManager().findFragmentById(R.id.details);
+                getFragmentManager().findFragmentById(R.id.details_item);
 
         if (details == null || details.getIndex() != mCurCheckPosition) {
             // Make new fragment to show this selection.
@@ -64,10 +64,10 @@ public class ItemActivity extends Activity implements ItemListFragment.OnItemSel
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 
             if (mDualPane) {
-                ft.replace(R.id.details, details);
+                ft.replace(R.id.details_item, details);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             } else {
-                ft.replace(R.id.list_fragment_layout, details);
+                ft.replace(R.id.list_item_fragment_layout, details);
                 ft.addToBackStack(null);
             }
 

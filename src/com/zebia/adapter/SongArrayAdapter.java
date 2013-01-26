@@ -11,9 +11,6 @@ import android.widget.TextView;
 import com.zebia.R;
 import com.zebia.model.Item;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SongArrayAdapter extends ArrayAdapter<Item> {
     static final int DELTA = 60 * 60000;
     static final int COLOR_STATUS = Color.parseColor("#a9f300");
@@ -21,42 +18,41 @@ public class SongArrayAdapter extends ArrayAdapter<Item> {
 
     Context context;
     int layoutResourceId;
-    List<Item> data = new ArrayList<Item>();
 
     public SongArrayAdapter(Context context) {
-        super(context, R.layout.item_list);
-        this.layoutResourceId = R.layout.item_list;
+        super(context, R.layout.song_list);
+        this.layoutResourceId = R.layout.song_list;
         this.context = context;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
-        ItemHolder holder;
+        SongHolder holder;
 
         if (row == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
 
-            holder = new ItemHolder();
-            holder.txtItemText = (TextView) row.findViewById(R.id.tx_item_text);
-            holder.txtItemFromUserName = (TextView) row.findViewById(R.id.tx_item_from_user);
+            holder = new SongHolder();
+            holder.txtItemText = (TextView) row.findViewById(R.id.tx_song_text);
+            holder.txtItemFromUserName = (TextView) row.findViewById(R.id.tx_song_from_user);
 
             row.setTag(holder);
         } else {
-            holder = (ItemHolder) row.getTag();
+            holder = (SongHolder) row.getTag();
         }
 
-        holder.fromItem(getItem(position));
+        holder.fromSong(getItem(position));
 
         return row;
     }
 
-    static class ItemHolder {
+    static class SongHolder {
         TextView txtItemText;
         TextView txtItemFromUserName;
 
-        public void fromItem(Item item) {
+        public void fromSong(Item item) {
             txtItemText.setText(item.getText());
             txtItemFromUserName.setText(item.getFromUserName());
         }

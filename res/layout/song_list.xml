@@ -6,7 +6,7 @@
         android:paddingLeft="12dp" android:paddingRight="12dp" android:paddingTop="8dp" android:paddingBottom="8dp">
 
     <TextView
-            android:id="@+id/tx_item_from_user"
+            android:id="@+id/tx_song_from_user"
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
             android:textSize="14dp" android:paddingBottom="1dp" android:singleLine="true" android:textColor="#3baeff"/>
 
     <TextView
-            android:id="@+id/tx_item_text"
+            android:id="@+id/tx_song_text"
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -11,7 +11,7 @@
               <!--android:layout_height="0dp"-->
             <!--/>-->
 
-    <FrameLayout android:id="@+id/list_fragment_layout" android:layout_weight="1"
+    <FrameLayout android:id="@+id/list_song_fragment_layout" android:layout_weight="1"
                  android:layout_width="fill_parent" android:layout_height="fill_parent" />
 
 </LinearLayout>

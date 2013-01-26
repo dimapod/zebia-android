@@ -5,11 +5,11 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
-import com.zebia.fragments.SongDetailsFragment;
-import com.zebia.fragments.SongListFragment;
+import com.zebia.fragments.ItemDetailsFragment;
+import com.zebia.fragments.ItemListFragment;
 import com.zebia.model.Item;
 
-public class SongActivity extends Activity implements SongListFragment.OnItemSelectedListener {
+public class MainActivity extends Activity implements ItemListFragment.OnItemSelectedListener {
     private boolean mDualPane;
     private int mCurCheckPosition = 0;
 
@@ -19,19 +19,19 @@ public class SongActivity extends Activity implements SongListFragment.OnItemSel
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.song);
+        setContentView(R.layout.item);
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
-        SongListFragment songListFragment = new SongListFragment();
+        ItemListFragment itemListFragment = new ItemListFragment();
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.list_song_fragment_layout, songListFragment);
+        ft.replace(R.id.list_item_fragment_layout, itemListFragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
 
         // Check to see if we have a frame in which to embed the details fragment directly in the containing UI.
-        View detailsFrame = findViewById(R.id.details_song);
+        View detailsFrame = findViewById(R.id.details_item);
         mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
 
         if (savedInstanceState != null) {
@@ -51,12 +51,12 @@ public class SongActivity extends Activity implements SongListFragment.OnItemSel
         mCurCheckPosition = index;
 
         // Check what fragment is currently shown, replace if needed.
-        SongDetailsFragment details = (SongDetailsFragment)
-                getFragmentManager().findFragmentById(R.id.details_song);
+        ItemDetailsFragment details = (ItemDetailsFragment)
+                getFragmentManager().findFragmentById(R.id.details_item);
 
         if (details == null || details.getIndex() != mCurCheckPosition) {
             // Make new fragment to show this selection.
-            details = new SongDetailsFragment(index, item);
+            details = new ItemDetailsFragment(index, item);
 
             // Execute a transaction, replacing any existing fragment
             // with this one inside the frame.
@@ -64,10 +64,10 @@ public class SongActivity extends Activity implements SongListFragment.OnItemSel
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 
             if (mDualPane) {
-                ft.replace(R.id.details_song, details);
+                ft.replace(R.id.details_item, details);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             } else {
-                ft.replace(R.id.list_song_fragment_layout, details);
+                ft.replace(R.id.list_item_fragment_layout, details);
                 ft.addToBackStack(null);
             }
 

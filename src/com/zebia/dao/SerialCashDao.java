@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 import android.util.Log;
 import com.google.gson.Gson;
-import com.zebia.model.ZebiaResponse;
 
 public class SerialCashDao<T> {
     private Gson gson;

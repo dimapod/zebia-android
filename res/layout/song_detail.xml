@@ -19,7 +19,7 @@
                       android:layout_height="wrap_content">
 
             <TextView
-                    android:id="@+id/tx_detail_item_from_label"
+                    android:id="@+id/tx_detail_song_from_label"
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
                     />
 
             <TextView
-                    android:id="@+id/tx_detail_item_from_user"
+                    android:id="@+id/tx_detail_song_from_user"
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
         </LinearLayout>
 
         <TextView
-                android:id="@+id/tx_detail_item_text"
+                android:id="@+id/tx_detail_song_text"
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
                 android:paddingBottom="5dp"/>
 
         <TextView
-                android:id="@+id/tx_detail_item_text_long_label"
+                android:id="@+id/tx_detail_song_text_long_label"
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                 android:textColor="#f8ff7f"/>
 
         <TextView
-                android:id="@+id/tx_detail_item_text_long"
+                android:id="@+id/tx_detail_song_text_long"
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

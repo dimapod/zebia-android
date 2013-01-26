@@ -81,7 +81,7 @@ public class SerialLoader<T> extends AsyncTaskLoader<SerialLoader.RestResponse> 
         mReload = reload;
         mType = type;
 
-        serialCashDao = new SerialCashDao<T>(new StorageItemsHelper(context), type);
+        serialCashDao = new SerialCashDao<T>(new StorageItemsHelper(context, type.getSimpleName()), type);
     }
 
     @Override

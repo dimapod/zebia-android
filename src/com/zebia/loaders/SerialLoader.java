@@ -87,21 +87,13 @@ public class SerialLoader<T> extends AsyncTaskLoader<SerialLoader.RestResponse> 
     @Override
     public RestResponse loadInBackground() {
         try {
-
-            // At the very least we always need an action.
             if (mAction == null) {
                 Log.e(TAG, "You did not define an action. REST call canceled.");
-                return new RestResponse(); // We send an empty response back. The LoaderCallbacks<RestResponse>
-                // implementation will always need to check the RestResponse
-                // and handle error cases like this.
+                return new RestResponse();
             }
 
-            // Here we define our base request object which we will
-            // send to our REST service via HttpClient.
             HttpRequestBase request = null;
 
-            // Let's build our request based on the HTTP verb we were
-            // given.
             switch (mVerb) {
                 case GET: {
 

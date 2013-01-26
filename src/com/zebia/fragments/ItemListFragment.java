@@ -190,7 +190,6 @@ public class ItemListFragment extends Fragment implements
 
         int code = data.getCode();
 
-        // Check to see if we got an HTTP 200 code and have some data.
         if (code == 200) {
             itemsAdapter.clear();
             itemsAdapter.addAll(data.getData().getResults());

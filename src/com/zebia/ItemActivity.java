@@ -9,7 +9,7 @@ import com.zebia.fragments.ItemDetailsFragment;
 import com.zebia.fragments.ItemListFragment;
 import com.zebia.model.Item;
 
-public class MainActivity extends Activity implements ItemListFragment.OnItemSelectedListener {
+public class ItemActivity extends Activity implements ItemListFragment.OnItemSelectedListener {
     private boolean mDualPane;
     private int mCurCheckPosition = 0;
 
@@ -19,7 +19,7 @@ public class MainActivity extends Activity implements ItemListFragment.OnItemSel
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.item);
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 

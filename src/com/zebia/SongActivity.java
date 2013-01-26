@@ -19,7 +19,7 @@ public class SongActivity extends Activity implements ItemListFragment.OnItemSel
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.item);
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 

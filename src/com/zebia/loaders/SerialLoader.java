@@ -31,7 +31,6 @@ public class SerialLoader<T> extends AsyncTaskLoader<SerialLoader.RestResponse> 
 
     // We use this delta to determine if our cached data is old or not. The value we have here is 10 minutes;
     private static final long STALE_DELTA = 600000;
-    private static final String LOG_TAG = "Zebia";
 
     private Gson gson = new Gson();
     private boolean mReload = true;
@@ -107,13 +106,13 @@ public class SerialLoader<T> extends AsyncTaskLoader<SerialLoader.RestResponse> 
                 case GET: {
 
                     if (mReload == false) {
-                        Log.d(LOG_TAG, "Trying to load data from db cash");
+                        Log.d(TAG, "Trying to load data from db cash");
                         // Try to fetch data from cache
                         T response = serialCashDao.restore();
                         if (response != null) {
                             return new RestResponse(response, 200);
                         }
-                        Log.d(LOG_TAG, "Cache is empty... fetching from net");
+                        Log.d(TAG, "Cache is empty... fetching from net");
                     }
 
                     request = new HttpGet();
@@ -184,7 +183,7 @@ public class SerialLoader<T> extends AsyncTaskLoader<SerialLoader.RestResponse> 
                     if (responseObj == null) {
                         statusCode = -1;
                     }
-                    Log.d(LOG_TAG, "Saving data to cache...");
+                    Log.d(TAG, "Saving data to cache...");
                     serialCashDao.save(responseObj);
                 }
                 RestResponse restResponse = new RestResponse(responseObj, statusCode);
@@ -309,7 +308,7 @@ public class SerialLoader<T> extends AsyncTaskLoader<SerialLoader.RestResponse> 
         try {
             return gson.fromJson(json, mType);
         } catch (Exception e) {
-            Log.e(LOG_TAG, "Failed to parse JSON.", e);
+            Log.e(TAG, "Failed to parse JSON.", e);
             e.printStackTrace();
         }
         return null;

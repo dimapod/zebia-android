@@ -2,12 +2,9 @@ package com.zebia;
 
 import android.app.Activity;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.Toast;
 import com.zebia.fragments.ItemDetailsFragment;
 import com.zebia.fragments.ItemListFragment;
 import com.zebia.model.Item;

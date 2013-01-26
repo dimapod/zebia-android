@@ -24,16 +24,9 @@ public class ItemArrayAdapter extends ArrayAdapter<Item> {
     int layoutResourceId;
     List<Item> data = new ArrayList<Item>();
 
-    public ItemArrayAdapter(Context context, int layoutResourceId, Item[] data) {
-        super(context, layoutResourceId, data);
-        this.layoutResourceId = layoutResourceId;
-        this.context = context;
-        this.data.addAll(Arrays.asList(data));
-    }
-
-    public ItemArrayAdapter(Context context, int layoutResourceId) {
-        super(context, layoutResourceId);
-        this.layoutResourceId = layoutResourceId;
+    public ItemArrayAdapter(Context context) {
+        super(context, R.layout.item_list);
+        this.layoutResourceId = R.layout.item_list;
         this.context = context;
     }
 

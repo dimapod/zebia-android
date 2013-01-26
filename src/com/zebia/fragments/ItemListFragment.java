@@ -7,12 +7,15 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.zebia.R;
 import com.zebia.SettingsActivity;
 import com.zebia.adapter.ItemArrayAdapter;
@@ -21,23 +24,28 @@ import com.zebia.model.Item;
 import com.zebia.model.ZebiaResponse;
 import com.zebia.utils.Animations;
 
-public class ItemListFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener,
-        ActionBar.OnNavigationListener,
+public class ItemListFragment extends Fragment implements
+        AdapterView.OnItemClickListener,
         LoaderManager.LoaderCallbacks<SerialLoader.RestResponse<ZebiaResponse>>,
-        SearchView.OnQueryTextListener {
+        SearchView.OnQueryTextListener,
+        PullToRefreshBase.OnRefreshListener<ListView> {
 
-    public static final String LOG_TAG = ItemListFragment.class.getName();
+    private static final String LOG_TAG = ItemListFragment.class.getName();
     private static final int LOADER_ITEMS_SEARCH = 0x1;
+    private static final int REQUEST_CODE_PREFERENCES = 1;
     private static final String ARGS_URI = "com.zebia.fragments.ItemListFragment.ARGS_URI";
     private static final String ARGS_PARAMS = "com.zebia.fragments.ItemListFragment.ARGS_PARAMS";
     private static final String ARGS_RELOAD = "com.zebia.fragments.ItemListFragment.ARGS_RELOAD";
-    private static final int REQUEST_CODE_PREFERENCES = 1;
+
+    private static final String KEY_SAVED_PAGE = "CURRENT_PAGE";
 
     private ItemArrayAdapter itemsAdapter;
     private SearchView searchView;
     private String searchQuery = null;
-    private ListView listView;
     private OnItemSelectedListener onItemSelectedListener;
+    private PullToRefreshListView pullToRefreshListView;
+
+    private int currentPage = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,35 +57,29 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Log.d(LOG_TAG, "Begin onActivityCreated()");
+        if (savedInstanceState != null) {
+            currentPage = savedInstanceState.getInt(KEY_SAVED_PAGE);
+        }
 
         getActivity().getActionBar().setDisplayShowTitleEnabled(false);
 
-        // Spinner at action bar
-        //        getActivity().getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-        //        ArrayAdapter<String> a = new ArrayAdapter<String>(getActivity(),
-        //                android.R.layout.simple_list_item_1, new String[]{"Group1", "Group2"});
-        //        getActivity().getActionBar().setListNavigationCallbacks(a, this);
+        pullToRefreshListView = (PullToRefreshListView) getView().findViewById(R.id.item_list);
+        pullToRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
+        pullToRefreshListView.setOnRefreshListener(this);
 
-        itemsAdapter = new ItemArrayAdapter(getActivity(), R.layout.item_list);
-        listView = (ListView) getView().findViewById(R.id.item_list);
+        itemsAdapter = new ItemArrayAdapter(getActivity());
+
+        ListView listView = pullToRefreshListView.getRefreshableView();
         listView.setAdapter(itemsAdapter);
         listView.setLayoutAnimation(Animations.listAnimation());
-
-        // Register all listeners and fetch views
-        registerElements();
+        listView.setOnItemClickListener(this);
 
         // Initialize the Loader.
         getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH, getBundle(false), this);
     }
 
-    private void registerElements() {
-        ((ListView) getView().findViewById(R.id.item_list)).setOnItemClickListener(this);
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.list_fragment, container, false);
     }
 
@@ -113,6 +115,7 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(KEY_SAVED_PAGE, currentPage);
         super.onSaveInstanceState(outState);
     }
 
@@ -143,21 +146,13 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
                 synchronization();
                 break;
             case R.id.menu_preferences:
-
-                // When the button is clicked, launch an activity through this intent
+                // Launch an activity through intent
                 Intent launchPreferencesIntent = new Intent().setClass(getActivity(), SettingsActivity.class);
-
-                // Make it a subactivity so we know when it returns
                 startActivityForResult(launchPreferencesIntent, REQUEST_CODE_PREFERENCES);
-
                 break;
         }
 
         return true;
-    }
-
-    private void synchronization() {
-        getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH, getBundle(true), this);
     }
 
     // ---------------------------------------------------------------------------------------------------
@@ -165,25 +160,9 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
     // ---------------------------------------------------------------------------------------------------
 
     @Override
-    public void onClick(View view) {
-        //        switch (view.getId()) {
-        //            case R.id.bt_item_add:
-        //                addNewItem(view);
-        //                break;
-        //        }
-    }
-
-    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         onItemSelectedListener.onItemSelected(position, itemsAdapter.getItem(position));
-
         //        itemsAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-        // Spinner at action bar
-        return true;
     }
 
     // ---------------------------------------------------------------------------------------------------
@@ -206,7 +185,7 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onLoadFinished(Loader<SerialLoader.RestResponse<ZebiaResponse>> loader, SerialLoader.RestResponse<ZebiaResponse> data) {
-
+        pullToRefreshListView.onRefreshComplete();
         Log.d(LOG_TAG, "Begin onLoadFinished()");
 
         int code = data.getCode();
@@ -242,6 +221,7 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
             Toast.makeText(getActivity(), "Searching for: " + searchQuery, Toast.LENGTH_SHORT).show();
             params.putString("q", searchQuery);
         }
+        params.putInt("page", currentPage);
 
         Bundle args = new Bundle();
         args.putParcelable(ARGS_URI, uri);
@@ -274,4 +254,37 @@ public class ItemListFragment extends Fragment implements View.OnClickListener, 
     public interface OnItemSelectedListener {
         public void onItemSelected(int index, Item item);
     }
+
+    // ---------------------------------------------------------------------------------------------------
+    // -- Pull TO REFRESH --------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------
+
+    @Override
+    public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+        if (refreshView.getCurrentMode() == PullToRefreshBase.Mode.PULL_FROM_END) {
+            Toast.makeText(getActivity(), "Next page", Toast.LENGTH_SHORT).show();
+        }
+
+        String label = DateUtils.formatDateTime(getActivity().getApplicationContext(), System.currentTimeMillis(),
+                DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
+
+        // Update the LastUpdatedLabel
+        refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+
+        loadNextPage();
+    }
+
+    // ---------------------------------------------------------------------------------------------------
+    // -- SYNC -------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------
+
+    private void synchronization() {
+        getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH, getBundle(true), this);
+    }
+
+    private void loadNextPage() {
+        currentPage++;
+        getLoaderManager().restartLoader(LOADER_ITEMS_SEARCH, getBundle(true), this);
+    }
+
 }

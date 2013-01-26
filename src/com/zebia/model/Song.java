@@ -1,6 +1,6 @@
 package com.zebia.model;
 
-public class Artist {
+public class Song {
 
     //@SerializedName("from_user_name")
     private String artist_id;
@@ -23,7 +23,7 @@ public class Artist {
 	private String track_id;
 	private int year;
 
-    public Artist() {
+    public Song() {
     }
 
     public String getArtist_id() {

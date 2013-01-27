@@ -9,18 +9,18 @@ import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import com.zebia.R;
-import com.zebia.model.Item;
+import com.zebia.model.Song;
 
 public class SongDetailsFragment extends Fragment {
     private int index;
-    private Item item;
+    private Song song;
 
     public SongDetailsFragment() {
     }
 
-    public SongDetailsFragment(int index, Item item) {
+    public SongDetailsFragment(int index, Song song) {
         this.index = index;
-        this.item = item;
+        this.song = song;
     }
 
     @Override
@@ -29,7 +29,7 @@ public class SongDetailsFragment extends Fragment {
             return null;
         }
 
-        if (item != null) {
+        if (song != null) {
             return inflater.inflate(R.layout.song_detail, container, false);
         } else {
             ScrollView scroller = new ScrollView(getActivity());
@@ -47,14 +47,16 @@ public class SongDetailsFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (item != null) {
-            TextView txFromUser = (TextView) getView().findViewById(R.id.tx_detail_song_from_user);
-            TextView txText = (TextView) getView().findViewById(R.id.tx_detail_song_text);
-            TextView txTextLong = (TextView) getView().findViewById(R.id.tx_detail_song_text_long);
+        if (song != null) {
+            TextView txArtist = (TextView) getView().findViewById(R.id.tx_detail_song_artist);
+            TextView txRelease = (TextView) getView().findViewById(R.id.tx_detail_song_release);
+            TextView txTitle = (TextView) getView().findViewById(R.id.tx_detail_song_title);
+            TextView txYear = (TextView) getView().findViewById(R.id.tx_detail_song_year);
 
-            txFromUser.setText(item.getFromUserName());
-            txText.setText(item.getText());
-            txTextLong.setText(item.getTextLong());
+            txArtist.setText(song.getArtist_name());
+            txRelease.setText(song.getRelease());
+            txTitle.setText(song.getTitle());
+            txYear.setText(String.valueOf(song.getYear()));
         }
     }
 
@@ -62,7 +64,7 @@ public class SongDetailsFragment extends Fragment {
         return index;
     }
 
-    public Item getItem() {
-        return item;
+    public Song getSong() {
+        return song;
     }
 }

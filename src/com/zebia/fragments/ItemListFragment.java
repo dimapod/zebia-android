@@ -17,7 +17,8 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.zebia.R;
 import com.zebia.SettingsActivity;
 import com.zebia.adapter.ItemArrayAdapter;
-import com.zebia.loaders.params.DevParamsMapper;
+import com.zebia.loaders.params.ItemsParamsMapper;
+import com.zebia.loaders.params.ParamsMapper;
 import com.zebia.loaders.params.RestParamBuilder;
 import com.zebia.loaders.SerialLoader;
 import com.zebia.model.Item;
@@ -43,7 +44,7 @@ public class ItemListFragment extends Fragment implements
     private PullToRefreshListView pullToRefreshListView;
 
     private int lastLoadedPage = 1;
-    private DevParamsMapper paramsMapper;
+    private ParamsMapper paramsMapper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,7 @@ public class ItemListFragment extends Fragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        this.paramsMapper = new DevParamsMapper();
+        this.paramsMapper = new ItemsParamsMapper();
 
         if (savedInstanceState != null) {
             lastLoadedPage = savedInstanceState.getInt(KEY_SAVED_PAGE);

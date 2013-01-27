@@ -11,7 +11,7 @@ public class SongsResponse {
     @SerializedName("results_per_page")
     private Integer resultsPerPage;
 
-    private List<Item> results;
+    private List<Song> results;
 
     public Integer getPage() {
         return page;
@@ -21,11 +21,11 @@ public class SongsResponse {
         this.page = page;
     }
 
-    public List<Item> getResults() {
+    public List<Song> getResults() {
         return results;
     }
 
-    public void setResults(List<Item> results) {
+    public void setResults(List<Song> results) {
         this.results = results;
     }
 

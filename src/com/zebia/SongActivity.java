@@ -7,7 +7,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import com.zebia.fragments.SongDetailsFragment;
 import com.zebia.fragments.SongListFragment;
-import com.zebia.model.Item;
+import com.zebia.model.Song;
 
 public class SongActivity extends Activity implements SongListFragment.OnItemSelectedListener {
     private boolean mDualPane;
@@ -47,7 +47,7 @@ public class SongActivity extends Activity implements SongListFragment.OnItemSel
     }
 
 
-    void showDetails(int index, Item item) {
+    void showDetails(int index, Song song) {
         mCurCheckPosition = index;
 
         // Check what fragment is currently shown, replace if needed.
@@ -56,7 +56,7 @@ public class SongActivity extends Activity implements SongListFragment.OnItemSel
 
         if (details == null || details.getIndex() != mCurCheckPosition) {
             // Make new fragment to show this selection.
-            details = new SongDetailsFragment(index, item);
+            details = new SongDetailsFragment(index, song);
 
             // Execute a transaction, replacing any existing fragment
             // with this one inside the frame.
@@ -83,7 +83,7 @@ public class SongActivity extends Activity implements SongListFragment.OnItemSel
 
     // Fragment callback
     @Override
-    public void onItemSelected(int index, Item item) {
-        showDetails(index, item);
+    public void onItemSelected(int index, Song song) {
+        showDetails(index, song);
     }
 }

@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.zebia.R;
-import com.zebia.model.Item;
+import com.zebia.model.Song;
 
-public class SongArrayAdapter extends ArrayAdapter<Item> {
+public class SongArrayAdapter extends ArrayAdapter<Song> {
     static final int DELTA = 60 * 60000;
     static final int COLOR_STATUS = Color.parseColor("#a9f300");
     static final int COLOR_OWNER = Color.parseColor("#ffb200");
@@ -35,8 +35,9 @@ public class SongArrayAdapter extends ArrayAdapter<Item> {
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new SongHolder();
-            holder.txtItemText = (TextView) row.findViewById(R.id.tx_song_text);
-            holder.txtItemFromUserName = (TextView) row.findViewById(R.id.tx_song_from_user);
+            holder.txtSongTitle = (TextView) row.findViewById(R.id.tx_song_title);
+            holder.txtSongArtist = (TextView) row.findViewById(R.id.tx_song_artist);
+            holder.txtSongRelease = (TextView) row.findViewById(R.id.tx_song_release);
 
             row.setTag(holder);
         } else {
@@ -49,12 +50,14 @@ public class SongArrayAdapter extends ArrayAdapter<Item> {
     }
 
     static class SongHolder {
-        TextView txtItemText;
-        TextView txtItemFromUserName;
+        TextView txtSongTitle;
+        TextView txtSongArtist;
+        TextView txtSongRelease;
 
-        public void fromSong(Item item) {
-            txtItemText.setText(item.getText());
-            txtItemFromUserName.setText(item.getFromUserName());
+        public void fromSong(Song song) {
+            txtSongTitle.setText(song.getTitle());
+            txtSongArtist.setText(song.getArtist_name());
+            txtSongRelease.setText(song.getRelease());
         }
     }
 

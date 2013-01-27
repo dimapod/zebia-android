@@ -3,27 +3,29 @@ package com.zebia.loaders.params;
 import android.net.Uri;
 import android.os.Bundle;
 
-public class DevParamsMapper implements ParamsMapper {
+public class SongsParamsMapper implements ParamsMapper {
 
     @Override
-    public Bundle map(String ip, String port, String mountpoint, RestParamBuilder builder) {
-        StringBuilder sb = new StringBuilder("http://").append(ip).append(":").append(port).append("/").append(mountpoint).append("/");
+    public Bundle map(String ip, String port, String mountPoint, RestParamBuilder builder) {
+        StringBuilder sb = new StringBuilder("http://").append(ip).append(":").append(port);
 
         Uri.Builder uriBuilder = Uri.parse(sb.toString()).buildUpon();
+        uriBuilder.appendPath(mountPoint);
+        uriBuilder.appendPath("songs");
 
         switch (builder.getPageToLoad()) {
             case 1:
-                uriBuilder.appendPath("items-page-1.json");
+                uriBuilder.appendPath("songs-page-1.json");
                 break;
             case 2:
-                uriBuilder.appendPath("items-page-2.json");
+                uriBuilder.appendPath("songs-page-2.json");
                 break;
             case 3:
-                uriBuilder.appendPath("items-page-3.json");
+                uriBuilder.appendPath("songs-page-3.json");
                 break;
 
             default:
-                uriBuilder.appendPath("items-page-1.json");
+                uriBuilder.appendPath("songs-page-1.json");
                 break;
         }
 

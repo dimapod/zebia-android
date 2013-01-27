@@ -19,11 +19,11 @@
                       android:layout_height="wrap_content">
 
             <TextView
-                    android:id="@+id/tx_detail_song_from_label"
+                    android:id="@+id/tx_detail_song_song_label"
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="From: "
+                    android:text="Song: "
                     android:textStyle="bold"
                     android:textSize="14dp"
                     android:singleLine="true"
@@ -31,28 +31,28 @@
                     />
 
             <TextView
-                    android:id="@+id/tx_detail_song_from_user"
+                    android:id="@+id/tx_detail_song_title"
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="User name"
+                    android:text="title"
                     android:textSize="14dp"
                     android:singleLine="true"
                     android:textColor="#3baeff"/>
         </LinearLayout>
 
-        <TextView
-                android:id="@+id/tx_detail_song_text"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Text"
-                android:textSize="14dp"
-                android:paddingLeft="15dp"
-                android:paddingBottom="5dp"/>
+        <!--<TextView-->
+        <!--android:id="@+id/tx_detail_song_text"-->
+        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Text"-->
+        <!--android:textSize="14dp"-->
+        <!--android:paddingLeft="15dp"-->
+        <!--android:paddingBottom="5dp"/>-->
 
         <TextView
-                android:id="@+id/tx_detail_song_text_long_label"
+                android:id="@+id/tx_detail_song_details"
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -61,14 +61,73 @@
                 android:textSize="14dp"
                 android:textColor="#f8ff7f"/>
 
-        <TextView
-                android:id="@+id/tx_detail_song_text_long"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Long text"
-                android:textSize="14dp"
-                android:paddingLeft="15dp"/>
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:orientation="horizontal"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:paddingLeft="15dp">
 
+            <TextView
+                    android:id="@+id/tx_detail_song_artist_label"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Artist: "
+                    android:textSize="14dp"/>
+
+            <TextView
+                    android:id="@+id/tx_detail_song_artist"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Artist name"
+                    android:textSize="14dp"/>
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:orientation="horizontal"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:paddingLeft="15dp">
+
+            <TextView
+                    android:id="@+id/tx_detail_song_release_label"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Album: "
+                    android:textSize="14dp"/>
+
+            <TextView
+                    android:id="@+id/tx_detail_song_release"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Release"
+                    android:textSize="14dp"/>
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:orientation="horizontal"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:paddingLeft="15dp">
+
+            <TextView
+                    android:id="@+id/tx_detail_song_year_label"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Year: "
+                    android:textSize="14dp"/>
+
+            <TextView
+                    android:id="@+id/tx_detail_song_year"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Year"
+                    android:textSize="14dp" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

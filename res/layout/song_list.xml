@@ -6,21 +6,33 @@
         android:paddingLeft="12dp" android:paddingRight="12dp" android:paddingTop="8dp" android:paddingBottom="8dp">
 
     <TextView
-            android:id="@+id/tx_song_from_user"
+            android:id="@+id/tx_song_artist"
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="placeholder"
             android:textStyle="bold"
-            android:textSize="14dp" android:paddingBottom="1dp" android:singleLine="true" android:textColor="#3baeff"/>
+            android:textSize="14dp"
+            android:singleLine="true"
+            android:textColor="#3baeff" />
 
     <TextView
-            android:id="@+id/tx_song_text"
+            android:id="@+id/tx_song_title"
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="placeholder"
-            android:textSize="14dp" android:paddingBottom="1dp"/>
+            android:textSize="14dp" android:textColor="#fdff5a"/>
+
+    <TextView
+            android:id="@+id/tx_song_release"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="italic"
+            android:text="placeholder"
+            android:textSize="14dp" />
+
 
     <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:orientation="horizontal"

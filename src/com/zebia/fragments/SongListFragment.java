@@ -20,15 +20,16 @@ import com.zebia.R;
 import com.zebia.SettingsActivity;
 import com.zebia.adapter.SongArrayAdapter;
 import com.zebia.loaders.SerialLoader;
-import com.zebia.loaders.params.DevParamsMapper;
+import com.zebia.loaders.params.ParamsMapper;
 import com.zebia.loaders.params.RestParamBuilder;
-import com.zebia.model.Item;
-import com.zebia.model.ItemsResponse;
+import com.zebia.loaders.params.SongsParamsMapper;
+import com.zebia.model.Song;
+import com.zebia.model.SongsResponse;
 import com.zebia.utils.Animations;
 
 public class SongListFragment extends Fragment implements
         AdapterView.OnItemClickListener,
-        LoaderManager.LoaderCallbacks<SerialLoader.RestResponse<ItemsResponse>>,
+        LoaderManager.LoaderCallbacks<SerialLoader.RestResponse<SongsResponse>>,
         SearchView.OnQueryTextListener,
         PullToRefreshBase.OnRefreshListener<ListView> {
 
@@ -45,7 +46,7 @@ public class SongListFragment extends Fragment implements
     private PullToRefreshListView pullToRefreshListView;
 
     private int lastLoadedPage = 1;
-    private DevParamsMapper paramsMapper;
+    private ParamsMapper paramsMapper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,7 +58,7 @@ public class SongListFragment extends Fragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        this.paramsMapper = new DevParamsMapper();
+        this.paramsMapper = new SongsParamsMapper();
 
         if (savedInstanceState != null) {
             lastLoadedPage = savedInstanceState.getInt(KEY_SAVED_PAGE);
@@ -171,7 +172,7 @@ public class SongListFragment extends Fragment implements
     // ---------------------------------------------------------------------------------------------------
 
     @Override
-    public Loader<SerialLoader.RestResponse<ItemsResponse>> onCreateLoader(int id, Bundle args) {
+    public Loader<SerialLoader.RestResponse<SongsResponse>> onCreateLoader(int id, Bundle args) {
         Log.d(LOG_TAG, "Begin onCreateLoader()");
 
         if (args != null && args.containsKey(RestParamBuilder.ARGS_URI)) {
@@ -179,14 +180,14 @@ public class SongListFragment extends Fragment implements
             Bundle params = args.getParcelable(RestParamBuilder.ARGS_PARAMS);
             Boolean reload = args.getBoolean(RestParamBuilder.ARGS_RELOAD);
 
-            return new SerialLoader(getActivity(), SerialLoader.HTTPVerb.GET, action, params, reload, ItemsResponse.class);
+            return new SerialLoader(getActivity(), SerialLoader.HTTPVerb.GET, action, params, reload, SongsResponse.class);
         }
 
         return null;
     }
 
     @Override
-    public void onLoadFinished(Loader<SerialLoader.RestResponse<ItemsResponse>> loader, SerialLoader.RestResponse<ItemsResponse> data) {
+    public void onLoadFinished(Loader<SerialLoader.RestResponse<SongsResponse>> loader, SerialLoader.RestResponse<SongsResponse> data) {
         pullToRefreshListView.onRefreshComplete();
         Log.d(LOG_TAG, "Begin onLoadFinished()");
 
@@ -208,7 +209,7 @@ public class SongListFragment extends Fragment implements
     }
 
     @Override
-    public void onLoaderReset(Loader<SerialLoader.RestResponse<ItemsResponse>> loader) {
+    public void onLoaderReset(Loader<SerialLoader.RestResponse<SongsResponse>> loader) {
         Log.d(LOG_TAG, "Begin onLoaderReset()");
     }
 
@@ -236,7 +237,7 @@ public class SongListFragment extends Fragment implements
 
     // Fragment / Activity communication
     public interface OnItemSelectedListener {
-        public void onItemSelected(int index, Item item);
+        public void onItemSelected(int index, Song item);
     }
 
     // ---------------------------------------------------------------------------------------------------

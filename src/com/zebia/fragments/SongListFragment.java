@@ -10,10 +10,7 @@ import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.*;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.Toast;
+import android.widget.*;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.zebia.R;
@@ -189,6 +186,8 @@ public class SongListFragment extends Fragment implements
     @Override
     public void onLoadFinished(Loader<SerialLoader.RestResponse<SongsResponse>> loader, SerialLoader.RestResponse<SongsResponse> data) {
         pullToRefreshListView.onRefreshComplete();
+        getActivity().setProgressBarIndeterminateVisibility(false);
+
         Log.d(LOG_TAG, "Begin onLoadFinished()");
 
         int code = data.getCode();
@@ -231,6 +230,8 @@ public class SongListFragment extends Fragment implements
 
         this.searchQuery = query;
         this.lastLoadedPage = 0;
+
+        getActivity().setProgressBarIndeterminateVisibility(true);
 
         getLoaderManager().restartLoader(LOADER_SONGS_SEARCH,
                 new RestParamBuilder(getActivity(), paramsMapper).setSearchQuery(searchQuery).build(), this);

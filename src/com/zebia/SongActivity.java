@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.view.Window;
 import com.zebia.fragments.SongDetailsFragment;
 import com.zebia.fragments.SongListFragment;
 import com.zebia.model.Song;
@@ -19,6 +20,8 @@ public class SongActivity extends Activity implements SongListFragment.OnItemSel
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
         setContentView(R.layout.song);
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);

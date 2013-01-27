@@ -1,0 +1,2197 @@
+{
+    "page": 2,
+    "total_pages": 3,
+    "results": [
+        {
+            "analysis_sample_rate": 2,
+            "artist_7digitalid": 5864492,
+            "artist_familiarity": 5,
+            "artist_hotttnesss": 5,
+            "artist_id": "fbc0ef50-a827-4482-adac-19d8514db38c",
+            "artist_latitude": 2.8,
+            "artist_location": "CostaMesa",
+            "artist_longitude": 10,
+            "artist_mbid": "Consequat zzril qui aliquam magna te, et et iriure ut.",
+            "artist_mbtags": [
+                7,
+                7,
+                2
+            ],
+            "artist_mbtags_count": [
+                10,
+                1,
+                3
+            ],
+            "artist_name": "Rachel Gilson",
+            "artist_playmeid": 9944,
+            "artist_terms": [
+                7,
+                2,
+                3
+            ],
+            "artist_terms_freq": [
+                8,
+                9,
+                3
+            ],
+            "artist_terms_weight": [
+                5,
+                5,
+                4
+            ],
+            "audio_md5": "Iriure luptatum duis feugait et commodo, hendrerit sit iusto consequat.",
+            "bars_confidence": [
+                4,
+                2,
+                4
+            ],
+            "bars_start": [
+                1,
+                8,
+                8
+            ],
+            "beats_confidence": [
+                8,
+                3,
+                3
+            ],
+            "beats_start": [
+                7,
+                4,
+                4
+            ],
+            "danceability": 3,
+            "duration": 100,
+            "end_of_fade_in": 8,
+            "energy": 1,
+            "key": 624,
+            "key_confidence": 574,
+            "loudness": 10,
+            "mode": 9,
+            "mode_confidence": 7,
+            "release": "Wisi feugait lobortis duis feugait lorem, vel velit aliquam.",
+            "release_7digitalid": 0,
+            "sections_confidence": [
+                6,
+                9,
+                7
+            ],
+            "sections_start": [
+                3,
+                4,
+                2
+            ],
+            "segments_confidence": [
+                3,
+                6,
+                9
+            ],
+            "segments_loudness_max": [
+                3,
+                9,
+                8
+            ],
+            "segments_loudness_max_start": [
+                5,
+                2,
+                10
+            ],
+            "segments_loudness_max_time": [
+                9,
+                9,
+                1
+            ],
+            "segments_pitches": [
+                [
+                    9
+                ],
+                [
+                    6
+                ]
+            ],
+            "segments_start": [
+                1,
+                1,
+                1
+            ],
+            "segments_timbre": [
+                [
+                    10
+                ],
+                [
+                    1
+                ]
+            ],
+            "similar_artists": [
+                7,
+                8,
+                5
+            ],
+            "song_hotttnesss": 0,
+            "song_id": "f6316bcd-b334-451d-9f97-0f210278146d",
+            "start_of_fade_out": 4,
+            "tatums_confidence": [
+                2,
+                4,
+                4
+            ],
+            "tatums_start": [
+                3,
+                10,
+                6
+            ],
+            "tempo": 7,
+            "time_signature": 4,
+            "time_signature_confidence": 1,
+            "title": "Consequat lorem wisi consectetuer volutpat.",
+            "track_7digitalid": 7,
+            "track_id": "65d6e12e-cd52-46b3-84b9-59c44666c923",
+            "year": "1996"
+        },
+        {
+            "analysis_sample_rate": 4,
+            "artist_7digitalid": 4995330,
+            "artist_familiarity": 7,
+            "artist_hotttnesss": 2,
+            "artist_id": "3f669f28-ab38-461d-9aa5-f6764a0c954c",
+            "artist_latitude": 3.2,
+            "artist_location": "Buffalo",
+            "artist_longitude": 9.4,
+            "artist_mbid": "Sed iriure diam dolor praesent dolor, te minim velit eros.",
+            "artist_mbtags": [
+                8,
+                5,
+                9
+            ],
+            "artist_mbtags_count": [
+                6,
+                9,
+                3
+            ],
+            "artist_name": "Riley Charlson",
+            "artist_playmeid": 5532,
+            "artist_terms": [
+                10,
+                9,
+                3
+            ],
+            "artist_terms_freq": [
+                5,
+                4,
+                3
+            ],
+            "artist_terms_weight": [
+                1,
+                8,
+                2
+            ],
+            "audio_md5": "Delenit quis ex dignissim at zzril, iusto elit esse.",
+            "bars_confidence": [
+                1,
+                4,
+                10
+            ],
+            "bars_start": [
+                1,
+                2,
+                7
+            ],
+            "beats_confidence": [
+                9,
+                2,
+                2
+            ],
+            "beats_start": [
+                10,
+                8,
+                1
+            ],
+            "danceability": 4,
+            "duration": 8,
+            "end_of_fade_in": 0,
+            "energy": 5,
+            "key": 982,
+            "key_confidence": 724,
+            "loudness": 4,
+            "mode": 5,
+            "mode_confidence": 3,
+            "release": "Ullamcorper odio consequat ut ad feugait, iusto ut vel nibh.",
+            "release_7digitalid": 10,
+            "sections_confidence": [
+                5,
+                9,
+                6
+            ],
+            "sections_start": [
+                5,
+                1,
+                5
+            ],
+            "segments_confidence": [
+                1,
+                10,
+                8
+            ],
+            "segments_loudness_max": [
+                3,
+                8,
+                7
+            ],
+            "segments_loudness_max_start": [
+                2,
+                8,
+                7
+            ],
+            "segments_loudness_max_time": [
+                2,
+                7,
+                3
+            ],
+            "segments_pitches": [
+                [
+                    2
+                ],
+                [
+                    5
+                ]
+            ],
+            "segments_start": [
+                9,
+                4,
+                9
+            ],
+            "segments_timbre": [
+                [
+                    7
+                ],
+                [
+                    4
+                ]
+            ],
+            "similar_artists": [
+                9,
+                7,
+                10
+            ],
+            "song_hotttnesss": 7,
+            "song_id": "57458f9b-b1c7-4027-87e9-70b2ffc8293e",
+            "start_of_fade_out": 10,
+            "tatums_confidence": [
+                2,
+                10,
+                7
+            ],
+            "tatums_start": [
+                8,
+                10,
+                1
+            ],
+            "tempo": 6,
+            "time_signature": 3,
+            "time_signature_confidence": 1,
+            "title": "Volutpat nisl augue consequat sed in, quis duis iusto.",
+            "track_7digitalid": 4,
+            "track_id": "bbacb7f9-4a55-49ed-9246-31c20d01e6fb",
+            "year": "2005"
+        },
+        {
+            "analysis_sample_rate": 1,
+            "artist_7digitalid": 8762635,
+            "artist_familiarity": 1,
+            "artist_hotttnesss": 8,
+            "artist_id": "bb37fe06-81fc-46c4-8d5a-4a9497f0901a",
+            "artist_latitude": 5.6,
+            "artist_location": "Bridgeport",
+            "artist_longitude": 7.3,
+            "artist_mbid": "Duis exerci in enim consequat et, hendrerit.",
+            "artist_mbtags": [
+                1,
+                6,
+                9
+            ],
+            "artist_mbtags_count": [
+                8,
+                8,
+                10
+            ],
+            "artist_name": "Abigail Wallace",
+            "artist_playmeid": 7642,
+            "artist_terms": [
+                9,
+                6,
+                4
+            ],
+            "artist_terms_freq": [
+                7,
+                2,
+                8
+            ],
+            "artist_terms_weight": [
+                2,
+                7,
+                4
+            ],
+            "audio_md5": "Duis sed vel hendrerit feugiat vel, nonummy nonummy enim in.",
+            "bars_confidence": [
+                1,
+                2,
+                1
+            ],
+            "bars_start": [
+                4,
+                5,
+                1
+            ],
+            "beats_confidence": [
+                6,
+                9,
+                6
+            ],
+            "beats_start": [
+                4,
+                9,
+                2
+            ],
+            "danceability": 5,
+            "duration": 12,
+            "end_of_fade_in": 3,
+            "energy": 0,
+            "key": 454,
+            "key_confidence": 737,
+            "loudness": 2,
+            "mode": 7,
+            "mode_confidence": 0,
+            "release": "Blandit consequat duis aliquam ipsum consectetuer, tation dignissim.",
+            "release_7digitalid": 10,
+            "sections_confidence": [
+                9,
+                6,
+                9
+            ],
+            "sections_start": [
+                8,
+                2,
+                2
+            ],
+            "segments_confidence": [
+                9,
+                7,
+                4
+            ],
+            "segments_loudness_max": [
+                4,
+                2,
+                4
+            ],
+            "segments_loudness_max_start": [
+                6,
+                7,
+                3
+            ],
+            "segments_loudness_max_time": [
+                5,
+                10,
+                1
+            ],
+            "segments_pitches": [
+                [
+                    2
+                ],
+                [
+                    7
+                ]
+            ],
+            "segments_start": [
+                9,
+                2,
+                4
+            ],
+            "segments_timbre": [
+                [
+                    9
+                ],
+                [
+                    3
+                ]
+            ],
+            "similar_artists": [
+                4,
+                6,
+                2
+            ],
+            "song_hotttnesss": 2,
+            "song_id": "604c6019-bb89-4b00-9e1a-781836617599",
+            "start_of_fade_out": 1,
+            "tatums_confidence": [
+                8,
+                9,
+                5
+            ],
+            "tatums_start": [
+                2,
+                8,
+                6
+            ],
+            "tempo": 4,
+            "time_signature": 10,
+            "time_signature_confidence": 9,
+            "title": "Sit consequat illum ut luptatum eros, in facilisi.",
+            "track_7digitalid": 7,
+            "track_id": "3c441e14-425c-48a0-910f-feb92e592748",
+            "year": "2008"
+        },
+        {
+            "analysis_sample_rate": 0,
+            "artist_7digitalid": 2044837,
+            "artist_familiarity": 3,
+            "artist_hotttnesss": 10,
+            "artist_id": "bb7fede0-9001-4b70-b29a-a0199166c880",
+            "artist_latitude": 1.1,
+            "artist_location": "Eugene",
+            "artist_longitude": 3.1,
+            "artist_mbid": "Ipsum magna laoreet nisl eu lorem, in lobortis consequat ipsum.",
+            "artist_mbtags": [
+                10,
+                2,
+                7
+            ],
+            "artist_mbtags_count": [
+                5,
+                4,
+                5
+            ],
+            "artist_name": "Amelia Thornton",
+            "artist_playmeid": 1761,
+            "artist_terms": [
+                5,
+                4,
+                9
+            ],
+            "artist_terms_freq": [
+                4,
+                1,
+                9
+            ],
+            "artist_terms_weight": [
+                3,
+                3,
+                7
+            ],
+            "audio_md5": "Minim sed vel praesent diam vero, feugait delenit.",
+            "bars_confidence": [
+                1,
+                9,
+                10
+            ],
+            "bars_start": [
+                6,
+                10,
+                9
+            ],
+            "beats_confidence": [
+                1,
+                9,
+                8
+            ],
+            "beats_start": [
+                6,
+                9,
+                10
+            ],
+            "danceability": 10,
+            "duration": 28,
+            "end_of_fade_in": 6,
+            "energy": 4,
+            "key": 431,
+            "key_confidence": 867,
+            "loudness": 9,
+            "mode": 4,
+            "mode_confidence": 2,
+            "release": "In volutpat qui ut ut consequat, autem dolore delenit in.",
+            "release_7digitalid": 3,
+            "sections_confidence": [
+                1,
+                2,
+                10
+            ],
+            "sections_start": [
+                2,
+                2,
+                7
+            ],
+            "segments_confidence": [
+                9,
+                5,
+                2
+            ],
+            "segments_loudness_max": [
+                10,
+                4,
+                1
+            ],
+            "segments_loudness_max_start": [
+                1,
+                1,
+                8
+            ],
+            "segments_loudness_max_time": [
+                2,
+                10,
+                3
+            ],
+            "segments_pitches": [
+                [
+                    6
+                ],
+                [
+                    2
+                ]
+            ],
+            "segments_start": [
+                9,
+                8,
+                7
+            ],
+            "segments_timbre": [
+                [
+                    10
+                ],
+                [
+                    4
+                ]
+            ],
+            "similar_artists": [
+                4,
+                3,
+                8
+            ],
+            "song_hotttnesss": 7,
+            "song_id": "8df6ce78-1db3-4a34-b9af-eeb64a6d1f3e",
+            "start_of_fade_out": 7,
+            "tatums_confidence": [
+                7,
+                6,
+                1
+            ],
+            "tatums_start": [
+                5,
+                8,
+                6
+            ],
+            "tempo": 5,
+            "time_signature": 0,
+            "time_signature_confidence": 1,
+            "title": "Erat odio facilisi quis duis iusto.",
+            "track_7digitalid": 5,
+            "track_id": "98404514-bc66-4669-b662-a37efeab946d",
+            "year": "2005"
+        },
+        {
+            "analysis_sample_rate": 2,
+            "artist_7digitalid": 8199538,
+            "artist_familiarity": 10,
+            "artist_hotttnesss": 8,
+            "artist_id": "49291756-418a-4f23-88b0-8df3191d4603",
+            "artist_latitude": 8.1,
+            "artist_location": "Clearwater",
+            "artist_longitude": 6.7,
+            "artist_mbid": "Iriure dolor amet blandit elit qui, in iriure.",
+            "artist_mbtags": [
+                4,
+                6,
+                2
+            ],
+            "artist_mbtags_count": [
+                2,
+                6,
+                1
+            ],
+            "artist_name": "Camila Michaelson",
+            "artist_playmeid": 2190,
+            "artist_terms": [
+                7,
+                6,
+                7
+            ],
+            "artist_terms_freq": [
+                6,
+                10,
+                3
+            ],
+            "artist_terms_weight": [
+                10,
+                6,
+                4
+            ],
+            "audio_md5": "Nostrud iusto et lorem nulla hendrerit, erat eu dolore.",
+            "bars_confidence": [
+                5,
+                7,
+                8
+            ],
+            "bars_start": [
+                10,
+                6,
+                6
+            ],
+            "beats_confidence": [
+                3,
+                3,
+                2
+            ],
+            "beats_start": [
+                6,
+                6,
+                2
+            ],
+            "danceability": 2,
+            "duration": 95,
+            "end_of_fade_in": 4,
+            "energy": 10,
+            "key": 711,
+            "key_confidence": 258,
+            "loudness": 7,
+            "mode": 9,
+            "mode_confidence": 10,
+            "release": "Nibh in nisl ullamcorper nisl.",
+            "release_7digitalid": 6,
+            "sections_confidence": [
+                8,
+                2,
+                10
+            ],
+            "sections_start": [
+                4,
+                1,
+                10
+            ],
+            "segments_confidence": [
+                7,
+                6,
+                7
+            ],
+            "segments_loudness_max": [
+                10,
+                5,
+                8
+            ],
+            "segments_loudness_max_start": [
+                10,
+                1,
+                2
+            ],
+            "segments_loudness_max_time": [
+                3,
+                1,
+                5
+            ],
+            "segments_pitches": [
+                [
+                    4
+                ],
+                [
+                    8
+                ]
+            ],
+            "segments_start": [
+                1,
+                7,
+                6
+            ],
+            "segments_timbre": [
+                [
+                    7
+                ],
+                [
+                    8
+                ]
+            ],
+            "similar_artists": [
+                4,
+                2,
+                8
+            ],
+            "song_hotttnesss": 6,
+            "song_id": "cd84a804-b134-42be-8f19-f31384498b98",
+            "start_of_fade_out": 8,
+            "tatums_confidence": [
+                6,
+                4,
+                8
+            ],
+            "tatums_start": [
+                8,
+                10,
+                1
+            ],
+            "tempo": 5,
+            "time_signature": 4,
+            "time_signature_confidence": 5,
+            "title": "Diam sit blandit at zzril.",
+            "track_7digitalid": 1,
+            "track_id": "b65c78c4-60dc-4e3c-86c1-63cf9eb21cc2",
+            "year": "2001"
+        },
+        {
+            "analysis_sample_rate": 3,
+            "artist_7digitalid": 9679221,
+            "artist_familiarity": 1,
+            "artist_hotttnesss": 6,
+            "artist_id": "648ff585-6449-4d80-a9a9-73873b8c46b9",
+            "artist_latitude": 4.7,
+            "artist_location": "Downey",
+            "artist_longitude": 1.6,
+            "artist_mbid": "Te veniam magna amet sit tation, at.",
+            "artist_mbtags": [
+                7,
+                3,
+                3
+            ],
+            "artist_mbtags_count": [
+                2,
+                5,
+                8
+            ],
+            "artist_name": "Destiny Gibbs",
+            "artist_playmeid": 5998,
+            "artist_terms": [
+                4,
+                5,
+                6
+            ],
+            "artist_terms_freq": [
+                2,
+                8,
+                3
+            ],
+            "artist_terms_weight": [
+                7,
+                8,
+                5
+            ],
+            "audio_md5": "Magna aliquip augue vero te dolor, adipiscing praesent tation tation.",
+            "bars_confidence": [
+                1,
+                3,
+                2
+            ],
+            "bars_start": [
+                8,
+                1,
+                8
+            ],
+            "beats_confidence": [
+                10,
+                6,
+                2
+            ],
+            "beats_start": [
+                1,
+                1,
+                7
+            ],
+            "danceability": 10,
+            "duration": 55,
+            "end_of_fade_in": 9,
+            "energy": 7,
+            "key": 468,
+            "key_confidence": 395,
+            "loudness": 9,
+            "mode": 10,
+            "mode_confidence": 6,
+            "release": "Dolore ut duis feugait ut ad.",
+            "release_7digitalid": 5,
+            "sections_confidence": [
+                5,
+                4,
+                8
+            ],
+            "sections_start": [
+                7,
+                8,
+                9
+            ],
+            "segments_confidence": [
+                6,
+                9,
+                9
+            ],
+            "segments_loudness_max": [
+                8,
+                8,
+                9
+            ],
+            "segments_loudness_max_start": [
+                9,
+                5,
+                5
+            ],
+            "segments_loudness_max_time": [
+                8,
+                7,
+                9
+            ],
+            "segments_pitches": [
+                [
+                    9
+                ],
+                [
+                    3
+                ]
+            ],
+            "segments_start": [
+                8,
+                8,
+                5
+            ],
+            "segments_timbre": [
+                [
+                    1
+                ],
+                [
+                    2
+                ]
+            ],
+            "similar_artists": [
+                5,
+                9,
+                5
+            ],
+            "song_hotttnesss": 2,
+            "song_id": "5366a98c-385b-45d5-939d-434487c39ee8",
+            "start_of_fade_out": 10,
+            "tatums_confidence": [
+                1,
+                5,
+                7
+            ],
+            "tatums_start": [
+                3,
+                8,
+                9
+            ],
+            "tempo": 5,
+            "time_signature": 6,
+            "time_signature_confidence": 3,
+            "title": "Molestie aliquip nibh duis praesent odio, dolore aliquam feugiat velit.",
+            "track_7digitalid": 9,
+            "track_id": "d4addb48-5031-4232-87c7-20392b3aebec",
+            "year": "1999"
+        },
+        {
+            "analysis_sample_rate": 5,
+            "artist_7digitalid": 1048832,
+            "artist_familiarity": 6,
+            "artist_hotttnesss": 5,
+            "artist_id": "26ff4afb-48c1-465f-b2e6-54d325dc3736",
+            "artist_latitude": 2.8,
+            "artist_location": "Fresno",
+            "artist_longitude": 3.3,
+            "artist_mbid": "Ad suscipit nostrud nibh nostrud nonummy, luptatum accumsan.",
+            "artist_mbtags": [
+                8,
+                3,
+                4
+            ],
+            "artist_mbtags_count": [
+                6,
+                10,
+                3
+            ],
+            "artist_name": "Zoey Winter",
+            "artist_playmeid": 1818,
+            "artist_terms": [
+                8,
+                2,
+                8
+            ],
+            "artist_terms_freq": [
+                10,
+                2,
+                8
+            ],
+            "artist_terms_weight": [
+                8,
+                5,
+                2
+            ],
+            "audio_md5": "Veniam nulla illum consectetuer zzril.",
+            "bars_confidence": [
+                1,
+                10,
+                8
+            ],
+            "bars_start": [
+                6,
+                4,
+                3
+            ],
+            "beats_confidence": [
+                3,
+                9,
+                1
+            ],
+            "beats_start": [
+                8,
+                2,
+                6
+            ],
+            "danceability": 2,
+            "duration": 94,
+            "end_of_fade_in": 3,
+            "energy": 5,
+            "key": 823,
+            "key_confidence": 598,
+            "loudness": 1,
+            "mode": 2,
+            "mode_confidence": 8,
+            "release": "Et te dolor wisi magna illum, iriure.",
+            "release_7digitalid": 8,
+            "sections_confidence": [
+                7,
+                10,
+                6
+            ],
+            "sections_start": [
+                4,
+                2,
+                10
+            ],
+            "segments_confidence": [
+                7,
+                9,
+                1
+            ],
+            "segments_loudness_max": [
+                6,
+                1,
+                4
+            ],
+            "segments_loudness_max_start": [
+                3,
+                7,
+                3
+            ],
+            "segments_loudness_max_time": [
+                9,
+                10,
+                9
+            ],
+            "segments_pitches": [
+                [
+                    8
+                ],
+                [
+                    4
+                ]
+            ],
+            "segments_start": [
+                1,
+                3,
+                10
+            ],
+            "segments_timbre": [
+                [
+                    7
+                ],
+                [
+                    8
+                ]
+            ],
+            "similar_artists": [
+                2,
+                9,
+                9
+            ],
+            "song_hotttnesss": 2,
+            "song_id": "f97ecea9-85d7-477c-a2cd-18be35ec7c17",
+            "start_of_fade_out": 5,
+            "tatums_confidence": [
+                6,
+                10,
+                1
+            ],
+            "tatums_start": [
+                3,
+                8,
+                8
+            ],
+            "tempo": 9,
+            "time_signature": 7,
+            "time_signature_confidence": 4,
+            "title": "Facilisi nulla quis facilisis et nonummy, enim exerci.",
+            "track_7digitalid": 7,
+            "track_id": "ab2729f3-6752-4bdc-b35b-4e18483cf9b8",
+            "year": "2002"
+        },
+        {
+            "analysis_sample_rate": 1,
+            "artist_7digitalid": 8409036,
+            "artist_familiarity": 9,
+            "artist_hotttnesss": 7,
+            "artist_id": "e8da1a01-9528-4c86-a06e-20fdcd376bee",
+            "artist_latitude": 9.9,
+            "artist_location": "Fontana",
+            "artist_longitude": 3,
+            "artist_mbid": "Hendrerit zzril hendrerit veniam et quis.",
+            "artist_mbtags": [
+                5,
+                9,
+                10
+            ],
+            "artist_mbtags_count": [
+                9,
+                10,
+                1
+            ],
+            "artist_name": "Brooklyn Adamson",
+            "artist_playmeid": 5374,
+            "artist_terms": [
+                9,
+                6,
+                1
+            ],
+            "artist_terms_freq": [
+                1,
+                2,
+                1
+            ],
+            "artist_terms_weight": [
+                3,
+                6,
+                2
+            ],
+            "audio_md5": "Accumsan illum blandit exerci quis vulputate, molestie.",
+            "bars_confidence": [
+                3,
+                5,
+                9
+            ],
+            "bars_start": [
+                1,
+                5,
+                8
+            ],
+            "beats_confidence": [
+                6,
+                9,
+                5
+            ],
+            "beats_start": [
+                2,
+                2,
+                5
+            ],
+            "danceability": 8,
+            "duration": 62,
+            "end_of_fade_in": 0,
+            "energy": 2,
+            "key": 99,
+            "key_confidence": 608,
+            "loudness": 0,
+            "mode": 8,
+            "mode_confidence": 4,
+            "release": "In ad facilisi qui et ipsum, aliquip euismod commodo.",
+            "release_7digitalid": 8,
+            "sections_confidence": [
+                7,
+                5,
+                10
+            ],
+            "sections_start": [
+                2,
+                8,
+                7
+            ],
+            "segments_confidence": [
+                10,
+                7,
+                1
+            ],
+            "segments_loudness_max": [
+                1,
+                7,
+                5
+            ],
+            "segments_loudness_max_start": [
+                10,
+                6,
+                3
+            ],
+            "segments_loudness_max_time": [
+                1,
+                1,
+                2
+            ],
+            "segments_pitches": [
+                [
+                    4
+                ],
+                [
+                    9
+                ]
+            ],
+            "segments_start": [
+                9,
+                2,
+                4
+            ],
+            "segments_timbre": [
+                [
+                    3
+                ],
+                [
+                    8
+                ]
+            ],
+            "similar_artists": [
+                2,
+                4,
+                2
+            ],
+            "song_hotttnesss": 0,
+            "song_id": "e018211b-1698-4f49-a1a0-dda41987fa81",
+            "start_of_fade_out": 8,
+            "tatums_confidence": [
+                8,
+                1,
+                9
+            ],
+            "tatums_start": [
+                3,
+                3,
+                10
+            ],
+            "tempo": 4,
+            "time_signature": 9,
+            "time_signature_confidence": 1,
+            "title": "Nulla duis lobortis exerci nulla te.",
+            "track_7digitalid": 10,
+            "track_id": "acfe15a4-3678-4bf0-9ef1-92e1bafe8c5a",
+            "year": "1993"
+        },
+        {
+            "analysis_sample_rate": 3,
+            "artist_7digitalid": 7268329,
+            "artist_familiarity": 0,
+            "artist_hotttnesss": 9,
+            "artist_id": "a6747d8f-2def-45a4-9557-d52144c1b80b",
+            "artist_latitude": 2.6,
+            "artist_location": "Cleveland",
+            "artist_longitude": 7.2,
+            "artist_mbid": "Eum iriure luptatum nostrud accumsan veniam.",
+            "artist_mbtags": [
+                8,
+                7,
+                4
+            ],
+            "artist_mbtags_count": [
+                4,
+                6,
+                9
+            ],
+            "artist_name": "Lauren Oldridge",
+            "artist_playmeid": 2516,
+            "artist_terms": [
+                7,
+                9,
+                2
+            ],
+            "artist_terms_freq": [
+                10,
+                10,
+                6
+            ],
+            "artist_terms_weight": [
+                10,
+                8,
+                5
+            ],
+            "audio_md5": "Magna dolor et iusto lobortis nonummy.",
+            "bars_confidence": [
+                8,
+                3,
+                10
+            ],
+            "bars_start": [
+                9,
+                8,
+                4
+            ],
+            "beats_confidence": [
+                4,
+                8,
+                3
+            ],
+            "beats_start": [
+                10,
+                5,
+                8
+            ],
+            "danceability": 3,
+            "duration": 44,
+            "end_of_fade_in": 5,
+            "energy": 2,
+            "key": 46,
+            "key_confidence": 659,
+            "loudness": 7,
+            "mode": 6,
+            "mode_confidence": 7,
+            "release": "Lobortis commodo eum consequat hendrerit eros, dolor.",
+            "release_7digitalid": 9,
+            "sections_confidence": [
+                10,
+                8,
+                5
+            ],
+            "sections_start": [
+                7,
+                1,
+                4
+            ],
+            "segments_confidence": [
+                2,
+                6,
+                9
+            ],
+            "segments_loudness_max": [
+                4,
+                2,
+                10
+            ],
+            "segments_loudness_max_start": [
+                6,
+                2,
+                2
+            ],
+            "segments_loudness_max_time": [
+                9,
+                5,
+                10
+            ],
+            "segments_pitches": [
+                [
+                    7
+                ],
+                [
+                    10
+                ]
+            ],
+            "segments_start": [
+                10,
+                3,
+                6
+            ],
+            "segments_timbre": [
+                [
+                    1
+                ],
+                [
+                    7
+                ]
+            ],
+            "similar_artists": [
+                8,
+                9,
+                4
+            ],
+            "song_hotttnesss": 0,
+            "song_id": "c00aec99-e332-4375-8ca8-560884ade33e",
+            "start_of_fade_out": 9,
+            "tatums_confidence": [
+                4,
+                4,
+                7
+            ],
+            "tatums_start": [
+                8,
+                9,
+                7
+            ],
+            "tempo": 10,
+            "time_signature": 1,
+            "time_signature_confidence": 9,
+            "title": "Adipiscing duis tincidunt facilisi praesent facilisi, facilisis te.",
+            "track_7digitalid": 4,
+            "track_id": "3c72ea59-1bb1-4dda-ab52-d57b20b125f1",
+            "year": "2012"
+        },
+        {
+            "analysis_sample_rate": 0,
+            "artist_7digitalid": 7887957,
+            "artist_familiarity": 1,
+            "artist_hotttnesss": 2,
+            "artist_id": "27f91fb1-1a41-4b90-8f07-a6b23e9f71c7",
+            "artist_latitude": 0.7,
+            "artist_location": "Anchorage",
+            "artist_longitude": 8.4,
+            "artist_mbid": "Qui quis blandit dolore nonummy at, augue.",
+            "artist_mbtags": [
+                2,
+                3,
+                2
+            ],
+            "artist_mbtags_count": [
+                8,
+                4,
+                10
+            ],
+            "artist_name": "Jocelyn Gilbert",
+            "artist_playmeid": 3092,
+            "artist_terms": [
+                3,
+                3,
+                5
+            ],
+            "artist_terms_freq": [
+                5,
+                1,
+                7
+            ],
+            "artist_terms_weight": [
+                10,
+                4,
+                6
+            ],
+            "audio_md5": "Nisl nulla blandit ut ea.",
+            "bars_confidence": [
+                8,
+                6,
+                4
+            ],
+            "bars_start": [
+                6,
+                4,
+                7
+            ],
+            "beats_confidence": [
+                2,
+                10,
+                5
+            ],
+            "beats_start": [
+                2,
+                9,
+                10
+            ],
+            "danceability": 1,
+            "duration": 92,
+            "end_of_fade_in": 2,
+            "energy": 4,
+            "key": 570,
+            "key_confidence": 981,
+            "loudness": 2,
+            "mode": 10,
+            "mode_confidence": 3,
+            "release": "Te erat magna adipiscing facilisi eu, vero.",
+            "release_7digitalid": 4,
+            "sections_confidence": [
+                7,
+                1,
+                5
+            ],
+            "sections_start": [
+                5,
+                2,
+                3
+            ],
+            "segments_confidence": [
+                1,
+                2,
+                9
+            ],
+            "segments_loudness_max": [
+                4,
+                7,
+                3
+            ],
+            "segments_loudness_max_start": [
+                4,
+                9,
+                4
+            ],
+            "segments_loudness_max_time": [
+                8,
+                2,
+                9
+            ],
+            "segments_pitches": [
+                [
+                    6
+                ],
+                [
+                    7
+                ]
+            ],
+            "segments_start": [
+                5,
+                7,
+                9
+            ],
+            "segments_timbre": [
+                [
+                    2
+                ],
+                [
+                    2
+                ]
+            ],
+            "similar_artists": [
+                6,
+                8,
+                4
+            ],
+            "song_hotttnesss": 4,
+            "song_id": "d2d75c8a-39a9-4821-b872-c7c3fc1c1646",
+            "start_of_fade_out": 5,
+            "tatums_confidence": [
+                8,
+                3,
+                1
+            ],
+            "tatums_start": [
+                10,
+                4,
+                5
+            ],
+            "tempo": 10,
+            "time_signature": 2,
+            "time_signature_confidence": 3,
+            "title": "Erat exerci dolor consectetuer praesent delenit, ipsum.",
+            "track_7digitalid": 0,
+            "track_id": "0949a14d-7c16-451b-abf7-0aaa2a176c3f",
+            "year": "1998"
+        },
+        {
+            "analysis_sample_rate": 5,
+            "artist_7digitalid": 7152924,
+            "artist_familiarity": 0,
+            "artist_hotttnesss": 2,
+            "artist_id": "74d92ede-341a-4a4e-b093-7040d552f281",
+            "artist_latitude": 2.8,
+            "artist_location": "Buffalo",
+            "artist_longitude": 7.8,
+            "artist_mbid": "Ad delenit ut odio ipsum erat, eu ea ut.",
+            "artist_mbtags": [
+                1,
+                5,
+                8
+            ],
+            "artist_mbtags_count": [
+                8,
+                3,
+                8
+            ],
+            "artist_name": "Katelyn Michaelson",
+            "artist_playmeid": 3737,
+            "artist_terms": [
+                8,
+                8,
+                1
+            ],
+            "artist_terms_freq": [
+                8,
+                9,
+                2
+            ],
+            "artist_terms_weight": [
+                9,
+                5,
+                5
+            ],
+            "audio_md5": "Eu commodo luptatum duis suscipit.",
+            "bars_confidence": [
+                8,
+                5,
+                2
+            ],
+            "bars_start": [
+                4,
+                8,
+                8
+            ],
+            "beats_confidence": [
+                3,
+                1,
+                5
+            ],
+            "beats_start": [
+                8,
+                7,
+                2
+            ],
+            "danceability": 10,
+            "duration": 9,
+            "end_of_fade_in": 5,
+            "energy": 2,
+            "key": 576,
+            "key_confidence": 238,
+            "loudness": 6,
+            "mode": 7,
+            "mode_confidence": 7,
+            "release": "Illum vulputate nisl vulputate at at, aliquip.",
+            "release_7digitalid": 4,
+            "sections_confidence": [
+                9,
+                7,
+                2
+            ],
+            "sections_start": [
+                3,
+                10,
+                10
+            ],
+            "segments_confidence": [
+                7,
+                6,
+                5
+            ],
+            "segments_loudness_max": [
+                1,
+                8,
+                9
+            ],
+            "segments_loudness_max_start": [
+                1,
+                8,
+                7
+            ],
+            "segments_loudness_max_time": [
+                8,
+                10,
+                7
+            ],
+            "segments_pitches": [
+                [
+                    7
+                ],
+                [
+                    4
+                ]
+            ],
+            "segments_start": [
+                9,
+                1,
+                3
+            ],
+            "segments_timbre": [
+                [
+                    7
+                ],
+                [
+                    6
+                ]
+            ],
+            "similar_artists": [
+                7,
+                1,
+                1
+            ],
+            "song_hotttnesss": 2,
+            "song_id": "8c9a7926-f9e4-491b-b1ac-cce8cc50af78",
+            "start_of_fade_out": 10,
+            "tatums_confidence": [
+                10,
+                2,
+                3
+            ],
+            "tatums_start": [
+                7,
+                4,
+                10
+            ],
+            "tempo": 7,
+            "time_signature": 6,
+            "time_signature_confidence": 5,
+            "title": "Blandit ut laoreet velit adipiscing aliquam, tincidunt.",
+            "track_7digitalid": 4,
+            "track_id": "0ce9fa8d-dec0-42ff-81f7-14bfe03bcbf0",
+            "year": "2004"
+        },
+        {
+            "analysis_sample_rate": 4,
+            "artist_7digitalid": 6541897,
+            "artist_familiarity": 4,
+            "artist_hotttnesss": 8,
+            "artist_id": "1ef5cd42-dbbf-4493-a398-92e79cfce21c",
+            "artist_latitude": 2,
+            "artist_location": "Detroit",
+            "artist_longitude": 0.3,
+            "artist_mbid": "Dolore exerci ad iusto magna amet, veniam quis magna.",
+            "artist_mbtags": [
+                6,
+                4,
+                7
+            ],
+            "artist_mbtags_count": [
+                8,
+                10,
+                7
+            ],
+            "artist_name": "Chloe Smith",
+            "artist_playmeid": 9570,
+            "artist_terms": [
+                2,
+                2,
+                2
+            ],
+            "artist_terms_freq": [
+                9,
+                1,
+                2
+            ],
+            "artist_terms_weight": [
+                4,
+                1,
+                7
+            ],
+            "audio_md5": "Praesent nostrud te hendrerit facilisis volutpat, molestie dolor tincidunt adipiscing.",
+            "bars_confidence": [
+                7,
+                4,
+                1
+            ],
+            "bars_start": [
+                6,
+                5,
+                7
+            ],
+            "beats_confidence": [
+                7,
+                2,
+                9
+            ],
+            "beats_start": [
+                3,
+                10,
+                2
+            ],
+            "danceability": 7,
+            "duration": 35,
+            "end_of_fade_in": 0,
+            "energy": 5,
+            "key": 214,
+            "key_confidence": 898,
+            "loudness": 4,
+            "mode": 0,
+            "mode_confidence": 10,
+            "release": "Consectetuer aliquip lorem minim eum ad.",
+            "release_7digitalid": 9,
+            "sections_confidence": [
+                2,
+                5,
+                7
+            ],
+            "sections_start": [
+                4,
+                6,
+                1
+            ],
+            "segments_confidence": [
+                6,
+                6,
+                7
+            ],
+            "segments_loudness_max": [
+                10,
+                6,
+                10
+            ],
+            "segments_loudness_max_start": [
+                6,
+                5,
+                3
+            ],
+            "segments_loudness_max_time": [
+                8,
+                7,
+                4
+            ],
+            "segments_pitches": [
+                [
+                    1
+                ],
+                [
+                    3
+                ]
+            ],
+            "segments_start": [
+                3,
+                7,
+                2
+            ],
+            "segments_timbre": [
+                [
+                    4
+                ],
+                [
+                    4
+                ]
+            ],
+            "similar_artists": [
+                9,
+                5,
+                7
+            ],
+            "song_hotttnesss": 2,
+            "song_id": "24981518-6092-4016-9358-3c5d64386d94",
+            "start_of_fade_out": 5,
+            "tatums_confidence": [
+                2,
+                5,
+                2
+            ],
+            "tatums_start": [
+                8,
+                9,
+                9
+            ],
+            "tempo": 2,
+            "time_signature": 1,
+            "time_signature_confidence": 5,
+            "title": "Vel dignissim accumsan velit tincidunt feugait.",
+            "track_7digitalid": 5,
+            "track_id": "2e3752f9-75fd-492c-b695-3caf2f2b6f64",
+            "year": "1996"
+        },
+        {
+            "analysis_sample_rate": 2,
+            "artist_7digitalid": 5614460,
+            "artist_familiarity": 1,
+            "artist_hotttnesss": 3,
+            "artist_id": "6a661b6b-5aa6-4411-80d1-c9a18bb88f20",
+            "artist_latitude": 0.9,
+            "artist_location": "Fullerton",
+            "artist_longitude": 3.9,
+            "artist_mbid": "Hendrerit dolore ad vel et molestie, aliquip.",
+            "artist_mbtags": [
+                9,
+                4,
+                2
+            ],
+            "artist_mbtags_count": [
+                5,
+                3,
+                5
+            ],
+            "artist_name": "Chloe Carrington",
+            "artist_playmeid": 6637,
+            "artist_terms": [
+                5,
+                7,
+                3
+            ],
+            "artist_terms_freq": [
+                3,
+                5,
+                1
+            ],
+            "artist_terms_weight": [
+                4,
+                9,
+                10
+            ],
+            "audio_md5": "Suscipit nulla nibh eros sed autem.",
+            "bars_confidence": [
+                5,
+                2,
+                2
+            ],
+            "bars_start": [
+                6,
+                3,
+                7
+            ],
+            "beats_confidence": [
+                8,
+                9,
+                5
+            ],
+            "beats_start": [
+                2,
+                1,
+                2
+            ],
+            "danceability": 7,
+            "duration": 15,
+            "end_of_fade_in": 5,
+            "energy": 6,
+            "key": 94,
+            "key_confidence": 387,
+            "loudness": 2,
+            "mode": 6,
+            "mode_confidence": 0,
+            "release": "Molestie nisl nulla aliquip eu aliquam, accumsan ea lobortis ipsum.",
+            "release_7digitalid": 0,
+            "sections_confidence": [
+                9,
+                2,
+                8
+            ],
+            "sections_start": [
+                8,
+                3,
+                2
+            ],
+            "segments_confidence": [
+                1,
+                3,
+                5
+            ],
+            "segments_loudness_max": [
+                3,
+                8,
+                2
+            ],
+            "segments_loudness_max_start": [
+                6,
+                9,
+                7
+            ],
+            "segments_loudness_max_time": [
+                6,
+                7,
+                10
+            ],
+            "segments_pitches": [
+                [
+                    8
+                ],
+                [
+                    3
+                ]
+            ],
+            "segments_start": [
+                4,
+                1,
+                7
+            ],
+            "segments_timbre": [
+                [
+                    5
+                ],
+                [
+                    6
+                ]
+            ],
+            "similar_artists": [
+                5,
+                4,
+                7
+            ],
+            "song_hotttnesss": 1,
+            "song_id": "a00b9ff6-efab-42a4-8c4e-c50183514c49",
+            "start_of_fade_out": 1,
+            "tatums_confidence": [
+                8,
+                2,
+                2
+            ],
+            "tatums_start": [
+                9,
+                5,
+                9
+            ],
+            "tempo": 8,
+            "time_signature": 2,
+            "time_signature_confidence": 2,
+            "title": "Nonummy eu suscipit ea quis.",
+            "track_7digitalid": 0,
+            "track_id": "ff19bf5e-d688-4b67-87d6-7549692ff753",
+            "year": "2004"
+        },
+        {
+            "analysis_sample_rate": 5,
+            "artist_7digitalid": 5085171,
+            "artist_familiarity": 8,
+            "artist_hotttnesss": 4,
+            "artist_id": "fa4f7d90-3101-4620-b99f-cd1ad02275ce",
+            "artist_latitude": 3.9,
+            "artist_location": "NewMexico",
+            "artist_longitude": 2.8,
+            "artist_mbid": "Nisl velit velit velit enim.",
+            "artist_mbtags": [
+                8,
+                7,
+                5
+            ],
+            "artist_mbtags_count": [
+                3,
+                4,
+                6
+            ],
+            "artist_name": "Audrey Watson",
+            "artist_playmeid": 9078,
+            "artist_terms": [
+                1,
+                10,
+                5
+            ],
+            "artist_terms_freq": [
+                10,
+                8,
+                9
+            ],
+            "artist_terms_weight": [
+                7,
+                10,
+                2
+            ],
+            "audio_md5": "Ut enim ad duis lorem.",
+            "bars_confidence": [
+                4,
+                4,
+                1
+            ],
+            "bars_start": [
+                7,
+                5,
+                8
+            ],
+            "beats_confidence": [
+                10,
+                6,
+                1
+            ],
+            "beats_start": [
+                3,
+                8,
+                7
+            ],
+            "danceability": 4,
+            "duration": 2,
+            "end_of_fade_in": 0,
+            "energy": 2,
+            "key": 511,
+            "key_confidence": 15,
+            "loudness": 10,
+            "mode": 1,
+            "mode_confidence": 3,
+            "release": "Eu illum commodo facilisis nostrud hendrerit, vulputate delenit et exerci.",
+            "release_7digitalid": 8,
+            "sections_confidence": [
+                7,
+                3,
+                5
+            ],
+            "sections_start": [
+                6,
+                3,
+                4
+            ],
+            "segments_confidence": [
+                9,
+                2,
+                6
+            ],
+            "segments_loudness_max": [
+                4,
+                5,
+                6
+            ],
+            "segments_loudness_max_start": [
+                5,
+                7,
+                3
+            ],
+            "segments_loudness_max_time": [
+                9,
+                3,
+                6
+            ],
+            "segments_pitches": [
+                [
+                    5
+                ],
+                [
+                    4
+                ]
+            ],
+            "segments_start": [
+                3,
+                3,
+                3
+            ],
+            "segments_timbre": [
+                [
+                    7
+                ],
+                [
+                    6
+                ]
+            ],
+            "similar_artists": [
+                10,
+                9,
+                5
+            ],
+            "song_hotttnesss": 9,
+            "song_id": "cb4c842a-77c4-47bd-86d0-5351ba8528da",
+            "start_of_fade_out": 8,
+            "tatums_confidence": [
+                7,
+                8,
+                10
+            ],
+            "tatums_start": [
+                9,
+                4,
+                7
+            ],
+            "tempo": 5,
+            "time_signature": 5,
+            "time_signature_confidence": 1,
+            "title": "Ut accumsan enim consequat ipsum dolor, ullamcorper.",
+            "track_7digitalid": 0,
+            "track_id": "0287325a-0517-4d39-8374-164445347478",
+            "year": "2007"
+        },
+        {
+            "analysis_sample_rate": 5,
+            "artist_7digitalid": 7681749,
+            "artist_familiarity": 9,
+            "artist_hotttnesss": 4,
+            "artist_id": "dba1b395-1e51-42eb-9113-1fde098459c0",
+            "artist_latitude": 3.2,
+            "artist_location": "Clarksville",
+            "artist_longitude": 1.3,
+            "artist_mbid": "Lorem dolor qui ut velit vel, dolore vel adipiscing.",
+            "artist_mbtags": [
+                7,
+                8,
+                2
+            ],
+            "artist_mbtags_count": [
+                4,
+                10,
+                8
+            ],
+            "artist_name": "Melanie Webster",
+            "artist_playmeid": 1819,
+            "artist_terms": [
+                6,
+                5,
+                7
+            ],
+            "artist_terms_freq": [
+                4,
+                9,
+                6
+            ],
+            "artist_terms_weight": [
+                4,
+                3,
+                8
+            ],
+            "audio_md5": "Ullamcorper tation commodo vulputate vulputate ullamcorper, suscipit lobortis te facilisi.",
+            "bars_confidence": [
+                1,
+                6,
+                10
+            ],
+            "bars_start": [
+                1,
+                10,
+                6
+            ],
+            "beats_confidence": [
+                3,
+                6,
+                4
+            ],
+            "beats_start": [
+                1,
+                5,
+                7
+            ],
+            "danceability": 0,
+            "duration": 2,
+            "end_of_fade_in": 3,
+            "energy": 1,
+            "key": 177,
+            "key_confidence": 775,
+            "loudness": 10,
+            "mode": 6,
+            "mode_confidence": 9,
+            "release": "Duis consectetuer eros dolore hendrerit qui.",
+            "release_7digitalid": 2,
+            "sections_confidence": [
+                6,
+                6,
+                8
+            ],
+            "sections_start": [
+                2,
+                2,
+                1
+            ],
+            "segments_confidence": [
+                3,
+                1,
+                9
+            ],
+            "segments_loudness_max": [
+                3,
+                7,
+                8
+            ],
+            "segments_loudness_max_start": [
+                6,
+                3,
+                3
+            ],
+            "segments_loudness_max_time": [
+                10,
+                1,
+                8
+            ],
+            "segments_pitches": [
+                [
+                    7
+                ],
+                [
+                    10
+                ]
+            ],
+            "segments_start": [
+                7,
+                7,
+                1
+            ],
+            "segments_timbre": [
+                [
+                    4
+                ],
+                [
+                    3
+                ]
+            ],
+            "similar_artists": [
+                8,
+                7,
+                4
+            ],
+            "song_hotttnesss": 8,
+            "song_id": "2e12aca0-f21c-4192-b249-234b7eff50d4",
+            "start_of_fade_out": 1,
+            "tatums_confidence": [
+                1,
+                1,
+                3
+            ],
+            "tatums_start": [
+                2,
+                9,
+                9
+            ],
+            "tempo": 6,
+            "time_signature": 2,
+            "time_signature_confidence": 10,
+            "title": "Facilisis ea odio et dolore.",
+            "track_7digitalid": 9,
+            "track_id": "7092c03d-c50d-4fe0-9a5e-3d1025fb5c2b",
+            "year": "2004"
+        }
+    ],
+    "results_per_page": 15
+}

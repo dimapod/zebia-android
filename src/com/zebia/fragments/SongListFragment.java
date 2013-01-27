@@ -67,7 +67,7 @@ public class SongListFragment extends Fragment implements
         getActivity().getActionBar().setDisplayShowTitleEnabled(false);
 
         pullToRefreshListView = (PullToRefreshListView) getView().findViewById(R.id.song_list);
-        pullToRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
+        pullToRefreshListView.setMode(PullToRefreshBase.Mode.DISABLED);
         pullToRefreshListView.setOnRefreshListener(this);
 
         songsAdapter = new SongArrayAdapter(getActivity());
@@ -195,11 +195,19 @@ public class SongListFragment extends Fragment implements
 
         if (code == 200) {
             lastLoadedPage = data.getData().getPage();
+            Integer totalPages = data.getData().getTotalPages();
 
             if (lastLoadedPage == 1) {  // TODO: not good
                 songsAdapter.clear();
             }
             songsAdapter.addAll(data.getData().getResults());
+
+            // Is last page
+            PullToRefreshBase.Mode mode = PullToRefreshBase.Mode.DISABLED;
+            if (lastLoadedPage < totalPages) {
+                mode = PullToRefreshBase.Mode.PULL_FROM_END;
+            }
+            pullToRefreshListView.setMode(mode);
 
             Toast.makeText(getActivity(), "Loaded page: " + lastLoadedPage, Toast.LENGTH_SHORT).show();
         } else {

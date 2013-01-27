@@ -41,16 +41,6 @@
                     android:textColor="#3baeff"/>
         </LinearLayout>
 
-        <!--<TextView-->
-        <!--android:id="@+id/tx_detail_song_text"-->
-        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Text"-->
-        <!--android:textSize="14dp"-->
-        <!--android:paddingLeft="15dp"-->
-        <!--android:paddingBottom="5dp"/>-->
-
         <TextView
                 android:id="@+id/tx_detail_song_details"
                 xmlns:android="http://schemas.android.com/apk/res/android"

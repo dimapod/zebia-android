@@ -1,10 +1,12 @@
 package com.zebia.fragments;
 
-import android.app.*;
+import android.app.Activity;
 import android.content.Intent;
-import android.content.Loader;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.*;

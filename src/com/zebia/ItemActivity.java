@@ -1,15 +1,15 @@
 package com.zebia;
 
-import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import com.zebia.fragments.ItemDetailsFragment;
 import com.zebia.fragments.ItemListFragment;
 import com.zebia.model.Item;
 
-public class ItemActivity extends Activity implements ItemListFragment.OnItemSelectedListener {
+public class ItemActivity extends FragmentActivity implements ItemListFragment.OnItemSelectedListener {
     private boolean mDualPane;
     private int mCurCheckPosition = 0;
 
@@ -25,7 +25,7 @@ public class ItemActivity extends Activity implements ItemListFragment.OnItemSel
 
         ItemListFragment itemListFragment = new ItemListFragment();
 
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.list_item_fragment_layout, itemListFragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
@@ -52,7 +52,7 @@ public class ItemActivity extends Activity implements ItemListFragment.OnItemSel
 
         // Check what fragment is currently shown, replace if needed.
         ItemDetailsFragment details = (ItemDetailsFragment)
-                getFragmentManager().findFragmentById(R.id.details_item);
+                getSupportFragmentManager().findFragmentById(R.id.details_item);
 
         if (details == null || details.getIndex() != mCurCheckPosition) {
             // Make new fragment to show this selection.
@@ -60,7 +60,7 @@ public class ItemActivity extends Activity implements ItemListFragment.OnItemSel
 
             // Execute a transaction, replacing any existing fragment
             // with this one inside the frame.
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 
             if (mDualPane) {

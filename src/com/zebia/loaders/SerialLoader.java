@@ -1,9 +1,9 @@
 package com.zebia.loaders;
 
-import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 import com.google.gson.Gson;
 import com.zebia.dao.SerialCashDao;

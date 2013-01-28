@@ -1,10 +1,9 @@
 package com.zebia.loaders;
 
-import android.app.Activity;
-import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

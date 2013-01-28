@@ -10,7 +10,10 @@ import android.support.v4.content.Loader;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.*;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.Toast;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.zebia.R;
@@ -44,6 +47,8 @@ public class SongListFragment extends Fragment implements
 
     private int lastLoadedPage = 1;
     private ParamsMapper paramsMapper;
+
+    public static Song currentSong;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -161,7 +166,10 @@ public class SongListFragment extends Fragment implements
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        onItemSelectedListener.onItemSelected(position, songsAdapter.getItem(position));
+
+        currentSong = songsAdapter.getItem(position); // TODO !
+
+        onItemSelectedListener.onItemSelected(position, songsAdapter.getItem(position-1));
     }
 
     // ---------------------------------------------------------------------------------------------------

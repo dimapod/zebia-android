@@ -1,5 +1,6 @@
 package com.zebia;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
@@ -87,6 +88,11 @@ public class SongActivity extends FragmentActivity implements SongListFragment.O
     // Fragment callback
     @Override
     public void onItemSelected(int index, Song song) {
-        showDetails(index, song);
+        if (mDualPane) {
+            showDetails(index, song);
+        } else {
+            Intent launchSongDetailsIntent = new Intent().setClass(this, SongDetailsActivity.class);
+            startActivity(launchSongDetailsIntent);
+        }
     }
 }

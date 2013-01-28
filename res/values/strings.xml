@@ -23,4 +23,6 @@
     <string name="item_details_activity">Item Details</string>
     <string name="song_details_activity">Song Details</string>
 
+    <string name="dummy_section_text">Section %1d is just a dummy section.</string>
+
 </resources>
